@@ -3,14 +3,14 @@ import React from 'react'
 import { linkStyle } from 'constants/styles'
 
 export const AppFooter = props => (
-  <p className="text-center text-sm text-grey py-8">
-    React Laravel Boilerplate - Made by{' '}
+  <p className="text-left text-sm text-grey p-2">
+    Laravel + React Boilerplate by{' '}
     <a
       className={linkStyle}
       target="_blank"
-      href="https://www.github.com/huwcarwyn"
+      href="https://github.com/alvingerona"
     >
-      Carwyn
+      Alvin Gerona
     </a>
   </p>
 )

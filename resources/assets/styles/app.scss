@@ -6,8 +6,14 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
 	outline: none;
 }
 
-@tailwind preflight;
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-@tailwind utilities;
+@import 'utilities/animations';
 
-@import 'utilities/animations'
+.w-25px{
+	width: 25px;	
+}
+
+.w-50px{
+	width: 50px;
+}

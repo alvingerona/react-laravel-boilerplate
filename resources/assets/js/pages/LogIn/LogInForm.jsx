@@ -6,6 +6,8 @@ import { PasswordFormLine, TextFormLine, NeutralButton } from 'components'
 import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
 
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+
 const validateLogin = values => {
   let errors = {}
 

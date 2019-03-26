@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const tailwindcss = require('tailwindcss')
+//const tailwindcss = require('tailwindcss')
 const purgecss = require('@fullhuman/postcss-purgecss')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -35,7 +35,7 @@ const appSCSSLoader = {
       loader: 'postcss-loader',
       options: {
         plugins: [
-          tailwindcss('./tailwind.config.js'),
+          // tailwindcss('./tailwind.config.js'),
           ...(devMode
             ? []
             : [

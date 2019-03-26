@@ -7,47 +7,70 @@ import { push } from 'react-router-redux'
 import { currentUserSelector } from 'store/selectors/session'
 import defaultProfileImage from 'default-profile-picture.jpeg'
 
-export const UserCardComponent = ({
-  user,
-  colorTheme,
-  className = '',
-  logOut
-}) => {
-  const { first_name: firstName, last_name: lastName, avatar } = user
+import { DropdownToggle, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownMenu, DropdownItem } from 'reactstrap';
 
-  const fullName =
-    lastName !== undefined ? [firstName, lastName].join(' ') : firstName
+export const UserCardComponent = class extends React.Component{
+  
+  constructor(props){
+    super(props)
 
-  const themeTextClass =
-    colorTheme === 'dark' ? 'text-blue-darker' : 'text-white'
+    this.state = {
 
-  return (
-    <div className={`flex items-center ${className} ${themeTextClass}`}>
-      <img
-        src={avatar || defaultProfileImage}
-        className="w-10 h-10 rounded-full mr-4"
-      />
+    }
+  }
 
-      <div className="text-sm">
-        <div className="mb-1">{fullName}</div>
-        <ul className="list-reset text-sm">
-          <li className="inline-block mr-4">
-            <span
-              className={`${themeTextClass} underline cursor-pointer`}
-              onClick={logOut}
-            >
-              Logout
-            </span>
-          </li>
-          <li className="inline-block">
-            <Link className={`${themeTextClass}`} to="/settings/user">
-              Settings
-            </Link>
-          </li>
-        </ul>
+  render(){
+
+    let {
+      user,
+      colorTheme,
+      className = '',
+      logOut
+    } = this.props;
+
+    const { first_name: firstName, last_name: lastName, avatar } = user
+
+    const fullName =
+      lastName !== undefined ? [firstName, lastName].join(' ') : firstName
+
+    const themeTextClass =
+      colorTheme === 'dark' ? 'text-blue-darker' : 'text-white'
+
+    return (
+      <div className={`items-center ${className} ${themeTextClass}`}>
+        <div className="text-sm">
+        
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  {fullName}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href="/settings/user">
+                    Settings
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={logOut}>
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+
+              <NavItem>
+                <img
+                  src={avatar || defaultProfileImage}
+                  className="rounded w-25px mt-2"
+                />
+              </NavItem>
+
+            </Nav>
+          </Collapse>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
 }
 
 const mapStateToProps = state => ({

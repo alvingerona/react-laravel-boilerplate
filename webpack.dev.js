@@ -19,7 +19,7 @@ module.exports = merge.smart(commonConfig, {
     contentBase: path.join(__dirname, 'public'),
     proxy: {
       '*': {
-        target: 'http://boilerplate.test/',
+        target: 'http://localhost.ticketer.api.com/',
         changeOrigin: true
       }
     }

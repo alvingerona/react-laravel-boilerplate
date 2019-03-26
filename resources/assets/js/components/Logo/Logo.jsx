@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { NavbarBrand } from 'reactstrap';
 
 export const Logo = props => (
-  <h1 className="text-lg">
-    <Link className="text-white no-underline" to="/">
+  <NavbarBrand href="/">
       Boilerplate
-    </Link>
-  </h1>
+  </NavbarBrand>
 )
