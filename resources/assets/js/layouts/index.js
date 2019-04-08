@@ -1,2 +1,2 @@
-export { DashboardLayout } from './Dashboard'
+export { DashboardLayout } from './Dashboard/Dashboard'
 export { FormPageLayout } from './FormPage'

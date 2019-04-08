@@ -6,5 +6,6 @@ export const initialState = {
     currentUser: null
   },
   flashMessages: {},
-  requests: {}
+  requests: {},
+  page: {}
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 
-import { PositiveButton, TextFormLine, PictureUpload } from 'components'
+import { PositiveButton, TextFormRow, PictureUpload } from 'components'
 import { email as emailRegex } from 'constants/regexes'
 
 export class UserSettingsFormComponent extends React.Component {
@@ -11,27 +11,19 @@ export class UserSettingsFormComponent extends React.Component {
 
     return (
       <form className={className} onSubmit={handleSubmit}>
-        <div className="flex items-center my-4">
-          <Field
-            name="avatar"
-            component={PictureUpload}
-            uploadHandler={avatarUploadHandler}
-            className="mr-10"
-          />
-          <div className="flex-grow">
-            <Field
-              name="first_name"
-              component={TextFormLine}
-              labelText="First Name"
-            />
-            <Field
-              name="last_name"
-              component={TextFormLine}
-              labelText="Last Name"
-            />
-            <Field name="email" component={TextFormLine} labelText="Email" />
-          </div>
-        </div>
+        <Field
+          name="avatar"
+          component={PictureUpload}
+          uploadHandler={avatarUploadHandler}
+          className="mr-10"
+        />
+        <Field
+          name="first_name"
+          component={TextFormRow}
+          labelText="First Name"
+        />
+        <Field name="last_name" component={TextFormRow} labelText="Last Name" />
+        <Field name="email" component={TextFormRow} labelText="Email" />
 
         <div className="flex border-grey-light">
           <PositiveButton type="submit" className="ml-auto">
@@ -63,7 +55,7 @@ const validateUserSettings = values => {
   return errors
 }
 
-const UserSettingsFormForm = reduxForm({
+const Form = reduxForm({
   form: 'accountSettings',
   enableReinitialize: true,
   validate: validateUserSettings
@@ -81,4 +73,4 @@ const mapStateToProps = state => {
 export const UserSettingsForm = connect(
   mapStateToProps,
   null
-)(UserSettingsFormForm)
+)(Form)

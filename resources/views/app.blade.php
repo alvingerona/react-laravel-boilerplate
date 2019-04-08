@@ -9,13 +9,18 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <title>{{ config('app.name', 'Laravel') }}</title>
+      <title>{{ config('app.name', 'Boilerplate +') }}</title>
 
+    <!-- Icons -->
+    <link href="/ui/css/flag-icon.min.css" rel="stylesheet" />
+    <link href="/ui/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/ui/css/simple-line-icons.css" rel="stylesheet" />
+    
       <!-- Styles -->
       <link href="/css/app.css" rel="stylesheet" />
   </head>
 </head>
-<body class="bg-grey-lightest m-0 p-0 font-sans">
+<body>
   <div id="app">
 
   </div>

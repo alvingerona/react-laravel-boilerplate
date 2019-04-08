@@ -36,15 +36,13 @@ export class AuthGuardComponent extends React.Component {
 
     if (loading) {
       return (
-        <div className="flex h-screen items-center">
-          <div className="w-screen text-3xl text-center text-grey">
-            Loading...
-          </div>
+        <div className="items-center">
+          <div className="text-center text-grey">Loading...</div>
         </div>
       )
     }
 
-    return <div>{children}</div>
+    return <div id="auth-guard-wrapper">{children}</div>
   }
 }
 

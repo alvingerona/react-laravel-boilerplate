@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { PasswordFormLine, PositiveButton } from 'components'
+import { PasswordFormRow, PositiveButton } from 'components'
 
 class ChangePasswordFormComponent extends React.Component {
   render() {
@@ -11,23 +11,21 @@ class ChangePasswordFormComponent extends React.Component {
       <form onSubmit={handleSubmit}>
         <Field
           name="old_password"
-          component={PasswordFormLine}
+          component={PasswordFormRow}
           labelText="Enter your old password"
-          className="mb-2"
+          className="mb-4"
         />
 
-        <div className="flex items-start mb-4">
+        <div className="mb-4">
           <Field
             name="new_password"
-            component={PasswordFormLine}
+            component={PasswordFormRow}
             labelText="New Password"
-            className="flex-grow"
           />
           <Field
             name="new_password_confirmation"
-            component={PasswordFormLine}
+            component={PasswordFormRow}
             labelText="Repeat your new password"
-            className="flex-grow pl-4"
           />
         </div>
 

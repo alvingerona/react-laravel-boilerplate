@@ -23,4 +23,16 @@ class User extends Authenticatable
         $hash = resolve('Illuminate\Contracts\Hashing\Hasher');
         $this->attributes['password'] = $hash->make($password);
     }
+
+    public function formatDate($date)
+    {
+        if(!$date)
+        {
+            return [];
+        }
+
+        return [
+            'a' => $date->format('m/d/Y')
+        ];
+    }
 }

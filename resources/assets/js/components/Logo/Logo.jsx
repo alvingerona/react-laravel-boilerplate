@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { NavbarBrand } from 'reactstrap';
+
+import { NavbarBrand } from '../Ui'
+
+// import './Logo.scss'
 
 export const Logo = props => (
-  <NavbarBrand href="/">
-      Boilerplate
-  </NavbarBrand>
+  <NavbarBrand to="/" full="Boilerplate +" min="B+" />
 )

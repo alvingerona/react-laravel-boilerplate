@@ -1,45 +1,36 @@
 import React from 'react'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { SubmissionError } from 'redux-form'
 
+import { actionHttp } from '../../utilities'
+import { Card } from '../../components/Ui'
 import SignUpForm from './SignUpForm'
 
 export const SignUpComponent = props => {
   const { submitSignup } = props
 
-  return <SignUpForm onSubmit={submitSignup} />
-}
-
-const parseValidationErrorResponse = response => {
-  let errors = {}
-
-  if (response.email && response.email.Unique) {
-    errors.email = 'This email already exists, please try a different email.'
+  let initialValues = {
+    email: '',
+    password: '',
+    first_name: ''
   }
 
-  return errors
+  return (
+    <Card withBody className="p-4">
+      <h1>Register</h1>
+      <p>Create your account</p>
+      <SignUpForm onSubmit={submitSignup} initialValues={initialValues} />
+    </Card>
+  )
 }
 
 const mapDispatchToProps = dispatch => ({
-  submitSignup: signUpData => {
-    return axios
-      .post('/api/signup', signUpData)
-      .then(response => {
-        if (response.status === 200) {
-          // Successful signup, move on to dashboard/overview.
-          dispatch(push('/'))
-        }
-      })
-      .catch(error => {
-        if (error.response.status === 422) {
-          // Invalid data was supplied to the API, show validation errors
-          throw new SubmissionError(
-            parseValidationErrorResponse(error.response.data.messages)
-          )
-        }
-      })
+  submitSignup: data => {
+    return actionHttp
+      .setDispatch(dispatch)
+      .setSuccessMessage('Please check your email for email verification.')
+      .onSuccess(() => dispatch(push('/')))
+      .post('register-user', '/api/signup', data)
   }
 })
 

@@ -1,15 +1,17 @@
 import React from 'react'
 
-const baseButtonStyles =
-  'bg-transparent font-semibold border hover:text-white hover:border-transparent'
+import { Button } from '../Ui'
+
+const baseButtonStyles = 'font-semibold'
 
 export const NeutralButton = ({ className = '', children, ...buttonProps }) => (
-  <button
+  <Button
+    type="secondary"
     {...buttonProps}
-    className={`${baseButtonStyles} hover:bg-blue text-blue-dark py-2 px-4 border-blue  ${className}`}
+    className={`${baseButtonStyles} ${className}`}
   >
     {children}
-  </button>
+  </Button>
 )
 
 export const NegativeButton = ({
@@ -17,12 +19,9 @@ export const NegativeButton = ({
   children,
   ...buttonProps
 }) => (
-  <button
-    {...buttonProps}
-    className={`${baseButtonStyles} hover:bg-red text-red-dark py-2 px-4 border-red ${className}`}
-  >
+  <Button {...buttonProps} className={`${baseButtonStyles} ${className}`}>
     {children}
-  </button>
+  </Button>
 )
 
 export const PositiveButton = ({
@@ -30,10 +29,38 @@ export const PositiveButton = ({
   children,
   ...buttonProps
 }) => (
-  <button
+  <Button
     {...buttonProps}
-    className={`${baseButtonStyles} hover:bg-green text-green-dark py-2 px-4 border-green ${className}`}
+    className={`${baseButtonStyles} ${className}`}
+    type="primary"
   >
     {children}
-  </button>
+  </Button>
+)
+
+export const SaveButton = ({ children, ...buttonProps }) => (
+  <PositiveButton {...buttonProps} type="submit" className="ml-auto">
+    {children}
+  </PositiveButton>
+)
+
+export const ViewButton = ({ children, to, onClick, ...buttonProps }) => (
+  <Button type="primary" onClick={onClick} to={to} {...buttonProps}>
+    <i className="fa fa-search-plus" />
+    {children}
+  </Button>
+)
+
+export const DeleteButton = ({ children, onClick, ...buttonProps }) => (
+  <Button type="danger" onClick={onClick} {...buttonProps}>
+    <i className="fa fa-trash-o" />
+    {children}
+  </Button>
+)
+
+export const EditButton = ({ children, onClick, to, ...buttonProps }) => (
+  <Button type="primary" onClick={onClick} to={to} {...buttonProps}>
+    <i className="fa fa-pencil" />
+    {children}
+  </Button>
 )

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { PasswordInput, TextArea, TextInput } from 'components'
+import { FormGroup, Label, Col } from '../Ui'
 
 export const FormLine = ({
   labelText,
@@ -9,14 +10,14 @@ export const FormLine = ({
   className = '',
   meta: { touched, error }
 }) => (
-  <div className={`block py-4 ${className}`}>
-    <label className="block text-grey-dark text-md" htmlFor={name}>
-      <span className="inline-block mb-2">{labelText}</span>
+  <FormGroup row className={`${className}`}>
+    <Label sm={2}>{labelText}</Label>
+    <Col sm={10}>
       {children}
       {touched &&
         (error && <div className="text-red text-sm mt-2">{error}</div>)}
-    </label>
-  </div>
+    </Col>
+  </FormGroup>
 )
 
 export const TextFormLine = ({ input, ...wrapperProps }) => (

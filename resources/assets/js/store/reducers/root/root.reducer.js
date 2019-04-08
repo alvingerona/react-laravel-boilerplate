@@ -6,6 +6,7 @@ import { sessionReducer } from '../session/session.reducer'
 import { entitiesReducer } from '../entities/entities.reducer'
 import { flashMessagesReducer } from '../ui/flashMessages.reducer'
 import { requestReducer } from '../requests/requests.reducer'
+import { pageReducer } from '../page/page.reducer'
 
 const rootReducer = combineReducers({
   entities: entitiesReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   form: formReducer,
   routing: routerReducer,
   flashMessages: flashMessagesReducer,
-  requests: requestReducer
+  requests: requestReducer,
+  page: pageReducer
 })
 
 export default rootReducer

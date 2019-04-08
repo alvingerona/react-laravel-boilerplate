@@ -31,10 +31,10 @@ class SignUpService
     {
         return $this->validator->make($data, [
             'first_name' => 'required',
-            'last_name' => 'required',
+            'last_name' => 'nullable',
             'email' => 'required|email|unique:users,email',
             'password' => 'required'
-        ]);
+        ]);        
     }
 
     public function signUpResponse($userInfo, $csrfToken)
@@ -53,6 +53,11 @@ class SignUpService
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
+        }
+
+        if(!isset($userInfo['last_name']) || !$userInfo['last_name'])
+        {
+            $userInfo['last_name'] = "";
         }
 
         $newUser = $this->user->create($userInfo);

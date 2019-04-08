@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\User;
 use App\Presenters\UserPresenter;
 use App\Criterias\OnlyOwnUserCriteria;
+use App\Criterias\AllowedToListUserCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use App\Contracts\Repository\UserRepositoryContract;
 
@@ -17,6 +18,7 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
         $this->auth = resolve('Illuminate\Contracts\Auth\Factory');
 
         $this->pushCriteria(OnlyOwnUserCriteria::class);
+        
     }
 
     public function model()
@@ -47,5 +49,20 @@ class UserRepository extends BaseRepository implements UserRepositoryContract
     public function removeCurrentAvatar()
     {
         return $this->update(['avatar' => null], $this->auth->user()->id);
+    }
+
+    public function listOfUsers()
+    {
+        $this->popCriteria(OnlyOwnUserCriteria::class);
+        $this->pushCriteria(AllowedToListUserCriteria::class);
+        
+        return $this->paginate();
+    }
+
+    public function findOne($userId)
+    {
+        $this->popCriteria(OnlyOwnUserCriteria::class);
+        
+        return $this->find($userId);        
     }
 }

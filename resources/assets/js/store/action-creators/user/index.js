@@ -1,1 +1,1 @@
-export { saveUser, changePassword } from './user'
+export { saveUser, changePassword, usersList, addUser } from './user'

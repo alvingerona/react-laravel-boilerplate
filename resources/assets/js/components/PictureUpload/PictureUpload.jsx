@@ -74,7 +74,7 @@ export class PictureUpload extends React.Component {
           onDragLeave={this.toggleHover}
           onDrop={this.handleDrop}
         >
-          <div className="w-48 h-48 rounded-full mb-4 mx-auto relative overflow-hidden pointer-events-none">
+          <div className="w-25 mb-4 mx-auto position-relative">
             {isHovering && (
               <div
                 styleName="picture-overlay"
@@ -84,7 +84,7 @@ export class PictureUpload extends React.Component {
             <img
               src={currentImage}
               styleName="uploaded-picture"
-              className="block"
+              className="img-thumbnail rounded img-fluid "
               alt="user avatar picture"
             />
           </div>
@@ -96,7 +96,7 @@ export class PictureUpload extends React.Component {
           type="file"
           id={name}
           name={name}
-          className="hidden"
+          className="fileupload-hidden"
           onChange={this.handleFileUpload}
         />
       </label>

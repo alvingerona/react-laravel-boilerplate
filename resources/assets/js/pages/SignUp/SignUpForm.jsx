@@ -2,9 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { reduxForm, Field } from 'redux-form'
 
-import { PasswordFormLine, TextFormLine, NeutralButton } from 'components'
+import {
+  NeutralButton,
+  PositiveButton,
+  PasswordFormLineIcon,
+  TextFormLineIcon
+} from 'components'
 import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
+import { Form } from 'components/Ui'
 
 const validateSignUp = values => {
   let errors = {}
@@ -13,9 +19,9 @@ const validateSignUp = values => {
     errors.first_name = 'This field is required'
   }
 
-  if (!values.last_name) {
-    errors.last_name = 'This field is required'
-  }
+  // if (!values.last_name) {
+  //   errors.last_name = 'This field is required'
+  // }
 
   if (!values.email) {
     errors.email = 'This field is required'
@@ -30,44 +36,58 @@ const validateSignUp = values => {
   return errors
 }
 
+const TextInput = props => <TextFormLineIcon iconClass="icon-user" {...props} />
+
+const EmailInput = props => (
+  <TextFormLineIcon iconClass="icon-envelope" {...props} />
+)
+
+const PasswordInput = props => (
+  <PasswordFormLineIcon iconClass="icon-lock" {...props} />
+)
+
 const SignUpForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, submitting } = props
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} loading={submitting}>
       <Field
-        component={TextFormLine}
+        component={TextInput}
         type="text"
         name="first_name"
-        labelText="First Name"
+        labelText="Name"
+        placeholder="Your name"
       />
-      <Field
-        component={TextFormLine}
+      {/* <Field
+        component={TextInput}
         type="text"
         name="last_name"
         labelText="Last Name"
-      />
+      /> */}
       <Field
-        component={TextFormLine}
+        component={EmailInput}
         type="text"
         name="email"
         labelText="Email"
+        placeholder="Email address"
       />
       <Field
-        component={PasswordFormLine}
+        component={PasswordInput}
         type="password"
         name="password"
         labelText="Password"
+        placeholder="Password"
       />
-      <div className="flex items-center">
-        <Link className={linkStyle} to="/login">
-          Or Login
-        </Link>
-        <NeutralButton className="ml-auto" type="submit">
+      <div>
+        <PositiveButton className="mr-2" submit>
           Sign Up
+        </PositiveButton>
+
+        <NeutralButton className={linkStyle} to="/login">
+          Or Login
         </NeutralButton>
       </div>
-    </form>
+    </Form>
   )
 }
 

@@ -1,30 +1,36 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { NeutralButton } from 'components'
 import { ModalConsumer } from 'contexts'
 
-const OverviewComponent = props => {
-  const ModalExample = props => <div>{props.message}</div>
-  return (
-    <div>
-      Put your initial dashboard page here
-      <div className="mt-4">
-        <ModalConsumer>
-          {({ showModal }) => (
-            <NeutralButton
-              onClick={() =>
-                showModal(ModalExample, {
-                  message: 'This message was passed in via modal props'
-                })
-              }
-            >
-              Open an example modal
-            </NeutralButton>
-          )}
-        </ModalConsumer>
-      </div>
-    </div>
-  )
+import { setDashboard } from 'store/action-creators/page'
+
+const ModalExample = props => <div>{props.message}</div>
+
+const OverviewComponent = class extends Component {
+  componentDidMount() {
+    this.props.setDashboard({
+      title: 'Dashboard'
+    })
+  }
+
+  render() {
+    {
+      return <div>New ticket block. </div>
+    }
+  }
 }
 
-export default OverviewComponent
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => ({
+  setDashboard: opts => setDashboard(dispatch, opts)
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverviewComponent)

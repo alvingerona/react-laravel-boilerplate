@@ -6,6 +6,7 @@ use App\Contracts\Repository\UserRepositoryContract as UserRepository;
 use Illuminate\Contracts\Routing\ResponseFactory as Response;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Validation\ValidationException;
+use App\Criterias\OnlyOwnUserCriteria;
 
 class UpdateUserService
 {
@@ -45,7 +46,7 @@ class UpdateUserService
 
     public function updateUser($userData)
     {
-        $currentUser = $this->repository->find($userData['id'])['data'];
+        $currentUser = $this->repository->popCriteria(OnlyOwnUserCriteria::class)->find($userData['id'])['data'];
 
         if ($userData['email'] && $currentUser['email'] == $userData['email']) {
             unset($userData['email']);
@@ -55,6 +56,11 @@ class UpdateUserService
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
+        }
+
+        if(isset($userData['password']) && trim($userData['password']) == "")
+        {
+            unset($userData);
         }
 
         return $this->repository->update($userData, $userData['id']);

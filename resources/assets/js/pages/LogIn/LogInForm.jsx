@@ -2,11 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { reduxForm, Field } from 'redux-form'
 
-import { PasswordFormLine, TextFormLine, NeutralButton } from 'components'
+import {
+  PasswordFormLineIcon,
+  TextFormLineIcon,
+  NeutralButton
+} from 'components'
 import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
-
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Row, Col, Form } from '../../components/Ui'
 
 const validateLogin = values => {
   let errors = {}
@@ -24,36 +27,46 @@ const validateLogin = values => {
   return errors
 }
 
+const InputEmail = props => (
+  <TextFormLineIcon iconClass="icon-user" {...props} />
+)
+
+const InputPassword = props => (
+  <PasswordFormLineIcon iconClass="icon-lock" {...props} />
+)
+
 const LoginForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, submitting } = props
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} loading={submitting}>
       <Field
-        component={TextFormLine}
+        component={InputEmail}
         type="text"
         name="email"
         labelText="Email"
       />
       <Field
-        component={PasswordFormLine}
+        component={InputPassword}
         type="password"
         name="password"
         labelText="Password"
       />
-      <div className="flex items-center">
-        <Link className={linkStyle} to="/signup">
-          Or Signup
-        </Link>
-        <span className="inline-block px-2">|</span>
-        <Link className={linkStyle} to="/forgot-password">
-          Forgot Password?
-        </Link>
-        <NeutralButton className="ml-auto" type="submit">
-          Log In
-        </NeutralButton>
-      </div>
-    </form>
+
+      <Row>
+        <Col col={6}>
+          <NeutralButton type="primary" className="px-4" submit>
+            Log In
+          </NeutralButton>
+        </Col>
+
+        <Col col={6} className="text-right">
+          <Link className={linkStyle} to="/forgot-password">
+            Forgot Password?
+          </Link>
+        </Col>
+      </Row>
+    </Form>
   )
 }
 

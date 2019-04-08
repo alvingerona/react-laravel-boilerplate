@@ -24,7 +24,15 @@ const setUserAvatar = (state, { avatar, userId }) => {
   return newState
 }
 
+const listUsers = (state, { listUsers }) => {
+  const newState = cloneDeep(state)
+  newState.listUsers = listUsers
+
+  return newState
+}
+
 export const entitiesReducer = createReducer(entities, {
   [userActions.SET_CURRENT_USER_INFO]: addUsersToStore,
-  [userActions.SET_AVATAR]: setUserAvatar
+  [userActions.SET_AVATAR]: setUserAvatar,
+  [userActions.LIST_USERS]: listUsers
 })
