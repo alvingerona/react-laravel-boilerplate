@@ -1,0 +1,23 @@
+.dashboard-sidebar {
+  width: 250px;
+  min-height: 400px;
+  background: #6a7785;
+
+  > ul {
+    padding: 0px 0;
+
+    > li {
+      > a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+        background-color: #576471;
+        color: #fff;
+
+        &:hover {
+          background: #46505a;
+        }
+      }
+    }
+  }
+}
