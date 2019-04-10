@@ -8,7 +8,7 @@ import { Form as FormUi } from 'components/Ui'
 
 export class FormComponent extends React.Component {
   render() {
-    const { handleSubmit, className, submitting } = this.props
+    const { handleSubmit, className, submitting, initialValues } = this.props
 
     return (
       <FormUi

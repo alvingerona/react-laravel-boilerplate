@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { PasswordInput, TextArea, TextInput } from 'components'
-import { FormGroup, InputPrependIcon } from '../Ui'
+import { FormInputGroup, InputPrependIcon } from '../Ui'
 
 export const FormLineIcon = ({
   iconClass,
@@ -10,10 +10,14 @@ export const FormLineIcon = ({
   className = '',
   meta: { touched, error }
 }) => (
-  <FormGroup row className={`${className} mb-3`} error={touched ? error : null}>
+  <FormInputGroup
+    row
+    className={`${className} mb-3`}
+    error={touched ? error : null}
+  >
     <InputPrependIcon iconClass={iconClass} />
     {children}
-  </FormGroup>
+  </FormInputGroup>
 )
 
 export const TextFormLineIcon = ({ input, placeholder, ...wrapperProps }) => (

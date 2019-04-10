@@ -1,22 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { push } from 'react-router-redux'
 
 import { currentUserSelector } from 'store/selectors/session'
 import defaultProfileImage from 'default-profile-picture.jpeg'
-
+import { NavNotifDropdown } from 'components'
 import {
-  DropdownToggle,
-  Collapse,
-  Nav,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownMenu,
   DropdownItem,
   NavbarUnlist,
-  NavbarLink,
   NavItemDropdown,
   DropdownHeader
 } from 'components/Ui'
@@ -38,12 +30,7 @@ export const UserCardComponent = class extends React.Component {
 
     return (
       <NavbarUnlist className="ml-auto">
-        <NavbarLink
-          to="#"
-          iconClass="icon-bell"
-          wrapperClass="d-md-down-none"
-          badge={{ type: 'danger', content: 5 }}
-        />
+        <NavNotifDropdown />
 
         <NavItemDropdown
           label={
@@ -70,48 +57,6 @@ export const UserCardComponent = class extends React.Component {
       </NavbarUnlist>
     )
   }
-
-  // renderx() {
-  //   let { user, colorTheme, className = '', logOut } = this.props
-
-  //   const { first_name: firstName, last_name: lastName, avatar } = user
-
-  //   const fullName =
-  //     lastName !== undefined ? [firstName, lastName].join(' ') : firstName
-
-  //   const themeTextClass =
-  //     colorTheme === 'dark' ? 'text-blue-darker' : 'text-white'
-
-  //   return (
-  //     <div className={`items-center ${className} ${themeTextClass}`}>
-  //       <div className="text-sm">
-  //         <Collapse isOpen={this.state.isOpen} navbar>
-  //           <Nav className="ml-auto" navbar>
-  //             <UncontrolledDropdown nav inNavbar>
-  //               <DropdownToggle nav caret>
-  //                 {fullName}
-  //               </DropdownToggle>
-  //               <DropdownMenu right>
-  //                 <Link className="dropdown-item" to="/settings/user">
-  //                   Settings
-  //                 </Link>
-  //                 <DropdownItem divider />
-  //                 <DropdownItem onClick={logOut}>Log Out</DropdownItem>
-  //               </DropdownMenu>
-  //             </UncontrolledDropdown>
-
-  //             <NavItem>
-  //               <img
-  //                 src={avatar || defaultProfileImage}
-  //                 className="rounded w-25px mt-2"
-  //               />
-  //             </NavItem>
-  //           </Nav>
-  //         </Collapse>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 }
 
 const mapStateToProps = state => ({

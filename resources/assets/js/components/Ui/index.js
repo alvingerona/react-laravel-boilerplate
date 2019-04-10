@@ -1,7 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { objValueFromDot } from '../../utility-functions'
+import { Label as LabelBS, FormGroup as FormGroupBS } from 'reactstrap'
+import { Badge as BadgeComp } from './Badge'
 
+/**
+ * Exports
+ */
 export { NavItemDropdown } from './NavItemDropdown'
 export { DropdownMenu } from './DropdownMenu'
 export { Col } from './Col'
@@ -9,6 +14,8 @@ export { CardDash } from './CardDash'
 export { Card, CardBody, CardGroup, CardHead } from './Card'
 export { Modal, ModalBody, ModalFooter, ModalNotif, ModalHead } from './Modal'
 export { Button } from './Button'
+export { NavbarBtn } from './NavbarBtn'
+export { Badge } from './Badge'
 
 export const Navbar = ({ children }) => (
   <ul className="nav navbar-nav ml-auto">{children}</ul>
@@ -28,12 +35,16 @@ export const Container = ({ className, children }) => {
   return <div className={`container ${className}`}>{children}</div>
 }
 
-export const FormGroup = ({ className, children, error }) => (
-  <div className={`form-group ` + (className ? className : '')}>
-    <div className={`input-group`}>{children}</div>
-    {error ? <div className="text-danger text-sm">{error}</div> : null}
-  </div>
-)
+export const FormInputGroup = ({ className, children, error }) => {
+  return (
+    <FormGroup className={className ? className : ''}>
+      <div className={`input-group`}>{children}</div>
+      {error ? <div className="text-danger text-sm">{error}</div> : null}
+    </FormGroup>
+  )
+}
+
+export const FormGroup = props => <FormGroupBS {...props} />
 
 export const InputPrependIcon = ({ iconClass }) => (
   <div className="input-group-prepend">
@@ -43,10 +54,10 @@ export const InputPrependIcon = ({ iconClass }) => (
   </div>
 )
 
-export const Label = ({ children, className }) => (
-  <label htmlFor={name} className={className ? className : ''}>
+export const Label = ({ children, className, ...rest }) => (
+  <LabelBS for={name} className={className ? className : ''} {...rest}>
     {children}
-  </label>
+  </LabelBS>
 )
 
 export const Input = ({ type, className, ...rest }) => {
@@ -105,7 +116,9 @@ export const DropdownItem = ({
         {iconClass ? <i className={`${iconClass}`} /> : null}
         {children}
         {label}
-        {badge ? <Badge type={badge.type}>{badge.content}</Badge> : null}
+        {badge ? (
+          <BadgeComp type={badge.type}>{badge.content}</BadgeComp>
+        ) : null}
       </React.Fragment>
     )
   }
@@ -141,10 +154,6 @@ export const NavbarUnlist = ({ children, className = '' }) => (
   <ul className={`nav navbar-nav ${className}`}>{children}</ul>
 )
 
-export const Badge = ({ children, type }) => (
-  <span className={`badge badge-pill badge-${type}`}>{children}</span>
-)
-
 export const NavbarLink = ({
   wrapperClass = '',
   linkClass = '',
@@ -156,7 +165,7 @@ export const NavbarLink = ({
   <li className={`nav-item ${wrapperClass}`}>
     <Link className={`nav-link ${linkClass}`} to={to}>
       {iconClass ? <i className={`${iconClass}`} /> : null}
-      {badge ? <Badge type={badge.type}>{badge.content}</Badge> : null}
+      {badge ? <BadgeComp type={badge.type}>{badge.content}</BadgeComp> : null}
 
       {children}
     </Link>

@@ -7,6 +7,7 @@ import { entitiesReducer } from '../entities/entities.reducer'
 import { flashMessagesReducer } from '../ui/flashMessages.reducer'
 import { requestReducer } from '../requests/requests.reducer'
 import { pageReducer } from '../page/page.reducer'
+import { notificationReducer } from '../notifications/notifications.reducer'
 
 const rootReducer = combineReducers({
   entities: entitiesReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   flashMessages: flashMessagesReducer,
   requests: requestReducer,
-  page: pageReducer
+  page: pageReducer,
+  notifications: notificationReducer
 })
 
 export default rootReducer

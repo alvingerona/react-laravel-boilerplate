@@ -5,12 +5,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 import { FormPageLayout, DashboardLayout } from 'layouts'
 import { store, browserHistory } from 'store/create-store'
-import {
-  AuthGuard,
-  FlashMessageRoot,
-  ModalProviderWrapper,
-  ModalRoot
-} from 'components'
+import { AuthGuard, FlashMessageRoot } from 'components'
 
 const LogIn = lazy(() => import('pages/LogIn/LogIn'))
 const SignUp = lazy(() => import('pages/SignUp/SignUp'))
@@ -65,7 +60,7 @@ export const App = props => (
             exact
             path="/forgot-password"
             render={() => (
-              <FormPageLayout title="Forgot Password">
+              <FormPageLayout md="6">
                 <ForgotPassword />
               </FormPageLayout>
             )}

@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import {
-  AppHeader,
+  DashHeader,
   AppFooter,
   NavTabLinks,
   DashSidebar,
@@ -18,11 +18,16 @@ export const DashboardLayoutComponent = class extends React.Component {
 
     this.state = {
       showSidebar: true,
-      minSidebar: false
+      minSidebar: false,
+      showMobileSidebar: false
     }
 
     this.toggleShowSidebar = this.toggleShowSidebar.bind(this)
+    /**
+     * callback when .sidebar-minimizer is closed.
+     */
     this.toggleMinSidebar = this.toggleMinSidebar.bind(this)
+    this.toogleMobileSidebar = this.toogleMobileSidebar.bind(this)
   }
 
   _breadcrumb() {
@@ -52,9 +57,13 @@ export const DashboardLayoutComponent = class extends React.Component {
     this.setState({ showSidebar: !this.state.showSidebar })
   }
 
+  toogleMobileSidebar() {
+    this.setState({ showMobileSidebar: !this.state.showMobileSidebar })
+  }
+
   render() {
     let { children, dashTabs, dashTitle } = this.props
-    let { showSidebar, minSidebar } = this.state
+    let { showSidebar, minSidebar, showMobileSidebar } = this.state
     let pageTabProps = {
       tabs: dashTabs,
       location: children.props.location
@@ -69,21 +78,33 @@ export const DashboardLayoutComponent = class extends React.Component {
     let dashRightProps = {
       pageTabProps,
       children,
-      breadcrumb: this._breadcrumb()
+      breadcrumb: this._breadcrumb(),
+      dashTitle: dashTitle
     }
 
     let headerProps = {
       toggleShowSidebar: this.toggleShowSidebar,
+      toogleMobileSidebar: this.toogleMobileSidebar,
       dashTitle: dashTitle
     }
 
+    let appClasses = ['app header-fixed sidebar-fixed aside-menu-fixed']
+
+    if (showMobileSidebar) {
+      appClasses.push('sidebar-show')
+    }
+
+    if (showSidebar) {
+      appClasses.push('sidebar-lg-show')
+    }
+
+    if (minSidebar) {
+      appClasses.push('brand-minimized sidebar-minimized')
+    }
+
     return (
-      <div
-        className={`app header-fixed sidebar-fixed aside-menu-fixed ${
-          showSidebar ? 'sidebar-lg-show' : ''
-        } ${minSidebar ? 'brand-minimized sidebar-minimized' : ''} `}
-      >
-        <AppHeader {...headerProps} />
+      <div className={appClasses.join(' ')}>
+        <DashHeader {...headerProps} />
         <div styleName="dashboard-wrapper" className="app-body">
           <DashSidebar {...sidebarProps} />
           <DashRight {...dashRightProps} />
@@ -97,7 +118,7 @@ export const DashboardLayoutComponent = class extends React.Component {
 
 const DashRight = ({ dashTitle, children, pageTabProps, breadcrumb }) => (
   <main styleName="dashboard-right" className="main">
-    <Breadcrumb {...breadcrumb} />
+    <Breadcrumb {...breadcrumb} mobileContent={<strong>{dashTitle}</strong>} />
 
     <NavTabLinks {...pageTabProps} />
     <div className="container-fluid">
@@ -107,18 +128,6 @@ const DashRight = ({ dashTitle, children, pageTabProps, breadcrumb }) => (
     </div>
   </main>
 )
-
-const DashTitle = ({ title }) => {
-  if (!title) {
-    return null
-  }
-
-  return (
-    <h2 className="mb-4" id="dashboard-title">
-      {title}
-    </h2>
-  )
-}
 
 const mapStateToProps = state => {
   return {

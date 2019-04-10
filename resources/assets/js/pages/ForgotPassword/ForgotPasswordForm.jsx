@@ -1,10 +1,10 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { NeutralButton, TextFormRow } from 'components'
+import { NeutralButton, TextFormLine, PositiveButton } from 'components'
 import { linkStyle } from 'constants/styles'
-
 import { email as emailRegex } from 'constants/regexes'
+import { Form } from 'components/Ui'
 
 const validate = values => {
   let errors = {}
@@ -19,27 +19,27 @@ const validate = values => {
 }
 
 export const ForgotPasswordFormComponent = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, submitting } = props
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} loading={submitting}>
       <Field
         type="text"
         name="email"
         labelText="Enter Your Email Address"
-        component={TextFormRow}
+        component={TextFormLine}
       />
 
       <div className="flex items-center">
-        <NeutralButton className={linkStyle} color="link" href="/login">
+        <PositiveButton className="mr-2" submit>
+          Request
+        </PositiveButton>
+
+        <NeutralButton className={linkStyle} color="link" to="/login">
           Back to Login
         </NeutralButton>
-
-        <NeutralButton className="ml-2" type="submit">
-          Request
-        </NeutralButton>
       </div>
-    </form>
+    </Form>
   )
 }
 

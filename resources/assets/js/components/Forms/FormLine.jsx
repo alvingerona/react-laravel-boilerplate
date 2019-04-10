@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { PasswordInput, TextArea, TextInput } from 'components'
-import { FormGroup, Label, Col } from '../Ui'
+import { FormInputGroup, Label } from '../Ui'
 
 export const FormLine = ({
   labelText,
@@ -10,14 +10,12 @@ export const FormLine = ({
   className = '',
   meta: { touched, error }
 }) => (
-  <FormGroup row className={`${className}`}>
-    <Label sm={2}>{labelText}</Label>
-    <Col sm={10}>
-      {children}
-      {touched &&
-        (error && <div className="text-red text-sm mt-2">{error}</div>)}
-    </Col>
-  </FormGroup>
+  <FormInputGroup className={`${className}`}>
+    <Label>{labelText}</Label>
+
+    {children}
+    {touched && (error && <div className="text-red text-sm mt-2">{error}</div>)}
+  </FormInputGroup>
 )
 
 export const TextFormLine = ({ input, ...wrapperProps }) => (

@@ -3,13 +3,20 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { SubmissionError } from 'redux-form'
+
 import { flashMessage } from 'store/action-creators/flashMessages'
+import { Card } from 'components/Ui'
 
 import { ForgotPasswordForm } from './ForgotPasswordForm'
 
 export const ForgotPasswordComponent = props => {
   const { submitForgotPassword } = props
-  return <ForgotPasswordForm onSubmit={submitForgotPassword} />
+  return (
+    <Card withBody className="p-4">
+      <h1>Forgot Password?</h1>
+      <ForgotPasswordForm onSubmit={submitForgotPassword} />
+    </Card>
+  )
 }
 
 const mapDispatchToProps = dispatch => ({

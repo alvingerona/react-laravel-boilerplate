@@ -7,6 +7,7 @@ use Illuminate\Contracts\Routing\ResponseFactory as Response;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Passport\ApiTokenCookieFactory;
+use App\Notifications\SignupWelcome;
 
 class SignUpService
 {
@@ -60,8 +61,16 @@ class SignUpService
             $userInfo['last_name'] = "";
         }
 
-        $newUser = $this->user->create($userInfo);
+        $newUser = $this->user->skipPresenter()->create($userInfo);
 
-        return $this->cookie->make($newUser['data']['id'], $csrfToken);
+        /**
+         * Send notification
+         */
+        $newUser->notify(new SignupWelcome());
+
+        /**
+         * Create cookie then response
+         */
+        return $this->cookie->make($newUser->id, $csrfToken);
     }
 }

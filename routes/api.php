@@ -13,6 +13,13 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/avatars', '\App\Api\Controllers\AvatarsController@upload');
     Route::put('/avatars', '\App\Api\Controllers\AvatarsController@update');
     Route::delete('/avatars', '\App\Api\Controllers\AvatarsController@delete');
+
+
+    /**
+     * Notifications
+     */
+    Route::get('/notifications/latest', '\App\Api\Controllers\NotificationsController@latest');
+    Route::post('/notifications/mark-read', '\App\Api\Controllers\NotificationsController@markRead');
 });
 
 /**

@@ -43,7 +43,7 @@ class actionHttpClass {
     return this._dispatch(
       makeRequest(actionType, () =>
         axios
-          .get(endPoint, params)
+          .get(endPoint, { params })
           .then(resp => this._onSuccess(resp))
           .catch(err => this._onError(err))
       )

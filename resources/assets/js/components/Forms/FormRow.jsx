@@ -11,7 +11,7 @@ export const FormRow = ({
   meta: { touched, error }
 }) => (
   <FormGroup className={`${className} row`}>
-    <Label for={name} className="col-md-3 col-form-label">
+    <Label for={name} className="col-form-label" md={3}>
       {labelText}
     </Label>
     <Col md={9}>

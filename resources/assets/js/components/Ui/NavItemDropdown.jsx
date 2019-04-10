@@ -16,10 +16,25 @@ class NavItemDropdownComponent extends Component {
     let { toggle } = this.props
     let { isOpen } = this.state
 
-    this.setState({ isOpen: !isOpen })
+    if (isOpen) {
+      setTimeout(() => {
+        this.setState({ isOpen: false })
+      }, 200)
+    } else {
+      this.setState({ isOpen: true })
+      this._onOpen()
+    }
 
     if (toggle) {
       toggle()
+    }
+  }
+
+  _onOpen() {
+    let { onOpen } = this.props
+
+    if (onOpen) {
+      onOpen()
     }
   }
 
