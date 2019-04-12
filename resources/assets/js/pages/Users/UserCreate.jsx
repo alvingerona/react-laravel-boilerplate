@@ -30,11 +30,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   setDashboard: opts => setDashboard(dispatch, opts),
+  /**
+   * TODO: remove history parameter then use redux history instead.
+   */
   createUser: (data, history) => {
-    return actionHttp
+    return new actionHttp()
       .setDispatch(dispatch)
       .setSuccessMessage('Successfully saved user.')
-      .onSuccess(() => history.push('/users/active'))
+      .onSuccess(() => history.push('/users'))
       .post('add-user', '/api/users', data)
   }
 })

@@ -44,14 +44,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   setDashboard: opts => setDashboard(dispatch, opts),
   updateUser: ({ data, history, userId }) => {
-    return actionHttp
+    return new actionHttp()
       .setDispatch(dispatch)
       .setSuccessMessage('Successfully updated user.')
       .onSuccess(() => history.push('/users/active'))
       .put('update-user', `/api/users/${userId}`, data)
   },
   loadUser: (userId, callback) => {
-    return actionHttp
+    return new actionHttp()
       .setDispatch(dispatch)
       .onSuccess(resp => callback(resp.data.data))
       .get('get-user', '/api/users/' + userId)

@@ -1,11 +1,16 @@
 export const initialState = {
   entities: {
-    users: {}
+    users: {},
+    roles: []
   },
   session: {
     currentUser: null
   },
   flashMessages: {},
   requests: {},
-  page: {}
+  page: {},
+  notifications: {
+    headNotifications: [],
+    headUnreadCount: 0
+  }
 }

@@ -62,7 +62,8 @@ class UserController
             'first_name',
             'last_name',
             'email',
-            'password'
+            'password',
+            'role'
         ]);
         
         return $this->storeUserService->storeUser($userData);

@@ -25,3 +25,9 @@ export const notificationActions = {
   LOAD_BY_LATEST_HEAD: 'NOTIFICATION/LOAD_BY_LATEST_HEAD',
   UNREAD_COUNT_HEAD: 'NOTIFICATION/UNREAD_COUNT_HEAD'
 }
+
+export const roleActions = {
+  LIST_ROLES: 'ROLE/LIST_ROLES'
+}
+
+export const ticketActions = {}

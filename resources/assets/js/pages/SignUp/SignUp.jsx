@@ -26,7 +26,7 @@ export const SignUpComponent = props => {
 
 const mapDispatchToProps = dispatch => ({
   submitSignup: data => {
-    return actionHttp
+    return new actionHttp()
       .setDispatch(dispatch)
       .setSuccessMessage('Please check your email for email verification.')
       .onSuccess(() => dispatch(push('/')))

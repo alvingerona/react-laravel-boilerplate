@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { objValueFromDot } from '../../utility-functions'
-import { Label as LabelBS, FormGroup as FormGroupBS } from 'reactstrap'
+import {
+  Label as LabelBS,
+  FormGroup as FormGroupBS,
+  Input as InputBS
+} from 'reactstrap'
 import { Badge as BadgeComp } from './Badge'
 
 /**
@@ -60,7 +64,7 @@ export const Label = ({ children, className, ...rest }) => (
   </LabelBS>
 )
 
-export const Input = ({ type, className, ...rest }) => {
+export const Input = ({ type, className, children, ...rest }) => {
   let classNames = ['form-control']
 
   if (!type) {
@@ -71,12 +75,18 @@ export const Input = ({ type, className, ...rest }) => {
     classNames.push(className)
   }
 
-  if (type == 'textarea') {
-    return <textarea {...rest} className={classNames.join(' ')} />
-  }
-
-  return <input {...rest} type={type} className={classNames.join(' ')} />
+  return (
+    <InputBS {...rest} className={classNames.join(' ')} type={type}>
+      {children}
+    </InputBS>
+  )
 }
+//   if (type == 'textarea') {
+//     return <textarea {...rest} className={classNames.join(' ')} />
+//   }
+
+//   return <input {...rest} type={type} className={classNames.join(' ')} />
+// }
 
 export const NavItem = () => <div />
 

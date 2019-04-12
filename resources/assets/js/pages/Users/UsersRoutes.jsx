@@ -9,8 +9,7 @@ import { setDashboardTabs, setDashboardTitle } from 'store/action-creators/page'
 
 export class UsersRoutesComponent extends Component {
   componentDidMount() {
-    this.props.setDashboardTabs(this._tabs())
-    //    this.props.setDashboardTitle('Users')
+    //  this.props.setDashboardTabs(this._tabs())
   }
 
   _tabs() {
@@ -44,6 +43,7 @@ export class UsersRoutesComponent extends Component {
             path={`${currentUrl}/edit/:userId`}
             component={UserEdit}
           />
+
           <Route exact path={`${currentUrl}/`} component={Users} />
         </Switch>
       </Fragment>

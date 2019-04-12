@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { PasswordInput, TextArea, TextInput } from 'components'
+import {
+  PasswordInput,
+  TextArea,
+  TextInput,
+  SelectInput,
+  SelectRole
+} from 'components'
 import { FormGroup, Label, Col } from '../Ui'
 
 export const FormRow = ({
@@ -8,11 +14,12 @@ export const FormRow = ({
   name,
   children,
   className = '',
-  meta: { touched, error }
+  meta: { touched, error },
+  required
 }) => (
   <FormGroup className={`${className} row`}>
     <Label for={name} className="col-form-label" md={3}>
-      {labelText}
+      {labelText} {required ? <small className="text-danger">*</small> : null}
     </Label>
     <Col md={9}>
       {children}
@@ -38,3 +45,19 @@ export const TextAreaFormRow = ({ input, ...wrapperProps }) => (
     <TextArea {...input} />
   </FormRow>
 )
+
+export const SelectFormRow = ({ input, options, ...wrapperProps }) => {
+  return (
+    <FormRow {...wrapperProps}>
+      <SelectInput {...input} options={options} />
+    </FormRow>
+  )
+}
+
+export const SelectRoleFromRow = ({ input, options, ...wrapperProps }) => {
+  return (
+    <FormRow {...wrapperProps}>
+      <SelectRole {...input} options={options} />
+    </FormRow>
+  )
+}

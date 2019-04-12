@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 
-import { PositiveButton, TextFormRow, PasswordFormRow } from 'components'
+import {
+  PositiveButton,
+  TextFormRow,
+  PasswordFormRow,
+  SelectRoleFromRow
+} from 'components'
 import { email as emailRegex } from 'constants/regexes'
 import { Form as FormUi } from 'components/Ui'
 
 export class FormComponent extends React.Component {
   render() {
-    const { handleSubmit, className, submitting, initialValues } = this.props
+    const { handleSubmit, className, submitting } = this.props
 
     return (
       <FormUi
@@ -17,18 +22,34 @@ export class FormComponent extends React.Component {
         loading={submitting}
       >
         <Field
+          name="role"
+          required
+          component={SelectRoleFromRow}
+          labelText="System Role"
+        />
+
+        <div className="mb-4" />
+
+        <Field
+          required
           name="first_name"
           component={TextFormRow}
           labelText="First Name"
         />
         <Field name="last_name" component={TextFormRow} labelText="Last Name" />
 
-        <Field name="email" component={TextFormRow} labelText="Email" />
+        <Field
+          name="email"
+          required
+          component={TextFormRow}
+          labelText="Email"
+        />
 
         <div className="mb-4" />
 
         <Field
           name="password"
+          required
           component={PasswordFormRow}
           labelText="Password"
         />
@@ -63,6 +84,10 @@ const validate = values => {
     errors.email = 'This field is required'
   } else if (!emailRegex.test(values.email)) {
     errors.email = 'Invalid email address'
+  }
+
+  if (!values.role) {
+    errors.role = 'This field is required'
   }
 
   if (values.password && values.password_confirmation !== values.password) {

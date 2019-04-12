@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <title>{{ config('app.name', 'Boilerplate +') }}</title>
+      <title>{{ config('app.name', 'Laravel App') }}</title>
 
     <!-- Icons -->
     <link href="/ui/css/flag-icon.min.css" rel="stylesheet" />

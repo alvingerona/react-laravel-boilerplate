@@ -43,7 +43,7 @@ export const changePassword = data => async dispatch => {
 
 export const usersList = filter => async dispatch => {
   const response = await dispatch(
-    makeRequest('change-user-password', () => axios.get(`/api/users`, filter))
+    makeRequest('load-users', () => axios.get(`/api/users`, filter))
   )
 
   return response

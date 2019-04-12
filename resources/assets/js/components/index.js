@@ -32,11 +32,13 @@ export {
   FormRow,
   PasswordFormRow,
   TextFormRow,
-  TextAreaFormRow
+  TextAreaFormRow,
+  SelectFormRow,
+  SelectRoleFromRow
 } from './Forms/FormRow'
 
 export * from './Icons'
-export { PasswordInput, TextArea, TextInput } from './Forms/Inputs'
+export { PasswordInput, TextArea, TextInput, SelectInput } from './Forms/Inputs'
 export { Logo } from './Logo/Logo'
 export { ModalProviderWrapper, ModalRoot } from './Modal'
 export { PictureUpload } from './PictureUpload/PictureUpload'
@@ -45,3 +47,4 @@ export { NavTabLinks } from './NavTabLinks/NavTabLinks'
 export { Breadcrumb } from './Breadcrumb/Breadcrumb'
 export { UsersTable } from './UsersTable/UsersTable'
 export { NavNotifDropdown } from './NavNotifDropdown/NavNotifDropdown'
+export { SelectRole } from './Forms/SelectRole'

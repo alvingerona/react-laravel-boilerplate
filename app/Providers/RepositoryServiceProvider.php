@@ -18,5 +18,14 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Contracts\Repository\UserRepositoryContract',
             'App\Repositories\Eloquent\UserRepository'
         );
+
+        $this->app->bind(
+            'App\Contracts\Repository\RoleRepositoryContract',
+            'App\Repositories\Eloquent\RoleRepository'
+        );
+
+        $this->app->bind(
+            "App\Contracts\Repository\TicketRepositoryContract", "App\Repositories\Eloquent\TicketRepository"
+        );
     }
 }

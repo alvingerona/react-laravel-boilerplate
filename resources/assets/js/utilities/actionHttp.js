@@ -140,4 +140,4 @@ const parseValidationErrorResponse = (error, dispatch) => {
   return errors
 }
 
-export const actionHttp = new actionHttpClass()
+export const actionHttp = actionHttpClass
