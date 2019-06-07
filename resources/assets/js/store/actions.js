@@ -30,4 +30,23 @@ export const roleActions = {
   LIST_ROLES: 'ROLE/LIST_ROLES'
 }
 
-export const ticketActions = {}
+export const ticketActions = {
+  STATUSES: 'TICKETS/STATUSES'
+}
+
+export const projectActions = {
+  LIST_PROJECTS: 'PROJECT/LIST_PROJECTS'
+}
+
+export const priorityTypeActions = {
+  LIST_TYPES: 'PRIORITY_TYPE/LIST_TYPES'
+}
+
+export const miscActions = {
+  DEFAULT_TICKET_CREATE: 'MISC/DEFAULT_TICKET_CREATE',
+  OVERVIEW: 'MISC/OVERVIEW'
+}
+
+export const faqActions = {
+  LIST_FAQ: 'FAQ/LIST_FAQ'
+}

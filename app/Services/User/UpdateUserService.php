@@ -26,10 +26,14 @@ class UpdateUserService
 
     public function makeUserUpdateValidator($data)
     {
+        $id = isset($data['id']) ? $data['id'] : 0;
+
         return $this->validator->make($data, [
+            'id' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'email|unique:users,email',
+            'email' => 'email|unique:users,email,' . $id ,
+            'role' => 'required'
         ]);
     }
 
@@ -44,13 +48,41 @@ class UpdateUserService
         }
     }
 
+    private function setupData($data)
+    {
+        $userData = [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name']
+        ];
+        $roleId = null;
+
+        if(isset($data['password']) && trim($data['password']) != "")
+        {
+            $userData = $data['password'];
+        }
+
+        if(isset($data['email']) && $data['email'] && trim($data['email']) != "")
+        {
+            $userData['email'] = $data['email'];
+        }
+
+        if(isset($data['role']) && $data['role'])
+        {
+            $roleId = $data['role'];
+        }
+
+        return [
+            'user_data' => $userData,
+            'role_id' => $roleId,
+            'id' => $data['id']
+        ];
+    }
+
     public function updateUser($userData)
     {
-        $currentUser = $this->repository->popCriteria(OnlyOwnUserCriteria::class)->find($userData['id'])['data'];
-
-        if ($userData['email'] && $currentUser['email'] == $userData['email']) {
-            unset($userData['email']);
-        }
+        $this->repository->popCriteria(OnlyOwnUserCriteria::class);
+        
+        $currentUser = $this->repository->find($userData['id'])['data'];
 
         $validator = $this->makeUserUpdateValidator($userData);
 
@@ -58,11 +90,15 @@ class UpdateUserService
             throw new ValidationException($validator);
         }
 
-        if(isset($userData['password']) && trim($userData['password']) == "")
+        $data = $this->setupData($userData);
+
+        $this->repository->update($data['user_data'], $data['id']);
+
+        if($data['role_id'])
         {
-            unset($userData);
+            $this->repository->updateRole($data['role_id'], $data['id']);
         }
 
-        return $this->repository->update($userData, $userData['id']);
+        return $this->repository->findOne($data['id']);
     }
 }

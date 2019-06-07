@@ -6,10 +6,10 @@ import {
   PasswordFormLineIcon,
   TextFormLineIcon,
   NeutralButton
-} from 'components'
+} from 'shared'
 import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
-import { Row, Col, Form } from '../../components/Ui'
+import { Col, Row, Form } from 'shared';
 
 const validateLogin = values => {
   let errors = {}

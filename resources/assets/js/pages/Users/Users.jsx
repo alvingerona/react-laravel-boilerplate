@@ -1,30 +1,64 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { CardDash } from 'components/Ui'
+import { CardDash } from 'shared'
 import { UsersTable } from 'components'
 import { usersList } from 'store/action-creators/user'
-import { userActions } from 'store/actions'
 import { setDashboardTitle } from 'store/action-creators/page'
 
 class UsersComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      pagination: null,
+      filter: {}
+    }
+  }
   componentDidMount() {
-    this.props.loadUsers({ status: this.props.match.params.status })
+    let { page, status } = this.props.match.params
+
+    this._loadUsers({
+      status,
+      page
+    })
     this.props.setDashboardTitle('Users')
   }
 
   componentWillReceiveProps(next) {
-    if (next.match.params.status != this.props.match.params.status) {
-      this.props.loadUsers({ status: next.match.params.status })
+    let currentMatch = this.props.match
+    let nextMatch = next.match
+
+    if (
+      nextMatch.params.page &&
+      nextMatch.params.page != currentMatch.params.page
+    ) {
+      this._loadUsers({ page: nextMatch.params.page })
     }
+  }
+
+  _loadUsers(filter) {
+    filter = { ...this.state.filter, ...filter }
+
+    this.props.loadUsers(filter, {
+      onSuccess: (data, meta) => {
+        this.setState({ pagination: meta.pagination })
+      }
+    })
   }
 
   render() {
     let { users } = this.props
+    let { pagination } = this.state
 
     return (
       <CardDash md={12} title="Active Users">
-        <UsersTable users={users} />
+        <UsersTable
+          users={users}
+          pagination={pagination}
+          onPageLink={({ page }) => {
+            return `/users/${page}`
+          }}
+        />
       </CardDash>
     )
   }
@@ -46,18 +80,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   setDashboardTitle: title => setDashboardTitle(dispatch, title),
-  loadUsers: async filter => {
-    const response = await dispatch(usersList(filter))
-
-    if (response.status === 400) {
-      throw new SubmissionError('users', validationFromResponse(response.data))
-    }
-
-    dispatch({
-      type: userActions.LIST_USERS,
-      listUsers: response.data.data.data
-    })
-  }
+  loadUsers: (filter, params) => usersList(dispatch, filter, params)
 })
 
 export const Users = connect(

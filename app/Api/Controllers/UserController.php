@@ -10,6 +10,7 @@ use App\Services\User\FindUserService;
 use App\Services\User\UserListService;
 use App\Services\User\StoreUserService;
 use Illuminate\Http\Request;
+use App\Services\User\UserGenerateReportService;
 
 class UserController
 {
@@ -17,6 +18,7 @@ class UserController
     private $updateUserService;
     private $changePasswordService;
     private $findUserService;
+    private $generateReportService;
 
     public function __construct(
         SignUpService $signUpService,
@@ -24,7 +26,8 @@ class UserController
         ChangePasswordService $changePasswordService,
         UserListService $usersListService,
         StoreUserService $storeUserService,
-        FindUserService $findUserService
+        FindUserService $findUserService,
+        UserGenerateReportService $generateReportService
 
     ) {
         $this->signUpService = $signUpService;
@@ -33,6 +36,7 @@ class UserController
         $this->usersListService = $usersListService;
         $this->storeUserService = $storeUserService;
         $this->findUserService = $findUserService;
+        $this->generateReportService = $generateReportService;
     }
 
     public function signUp(Request $request)
@@ -45,15 +49,9 @@ class UserController
 
     public function update(Request $request)
     {
-        $userData = $request->only([
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'password'
-        ]);
+        $data = $request->all();
 
-        return $this->updateUserService->updateUser($userData);
+        return $this->updateUserService->updateUser($data);
     }
 
     public function store(Request $request)
@@ -85,6 +83,7 @@ class UserController
     {
         $filters = $request->all();
 
+
         return $this->usersListService->listResponse($filters);
     }
 
@@ -92,4 +91,9 @@ class UserController
     {
         return $this->findUserService->findUserResponse($userId);
     }
+
+    public function generateReport(Request $request)
+    {
+        return $this->generateReportService->generateWithResponse($request->all());
+    }    
 }

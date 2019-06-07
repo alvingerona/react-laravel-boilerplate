@@ -44,7 +44,7 @@ export class UsersRoutesComponent extends Component {
             component={UserEdit}
           />
 
-          <Route exact path={`${currentUrl}/`} component={Users} />
+          <Route exact path={`${currentUrl}/:page?`} component={Users} />
         </Switch>
       </Fragment>
     )

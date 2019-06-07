@@ -1,10 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
-import { Badge } from '../Ui'
+import { Badge } from 'shared'
 import './DashSidebar.scss'
+import { user } from 'utilities'
 
-export const DashSidebar = class extends React.Component {
+const DashSidebarComponent = class extends React.Component {
   constructor(props) {
     super(props)
 
@@ -14,26 +15,38 @@ export const DashSidebar = class extends React.Component {
   }
 
   _links() {
+    let user = this._user()
     return [
       { label: 'Dashboard', to: '/', icon: 'icon-speedometer' },
+      { label: 'Create Ticket', to: '/tickets/create', icon: 'icon-plus' },
       {
         label: 'Tickets',
         to: '/tickets',
-        icon: 'icon-speech',
-        badge: { type: 'danger', content: 5 }
+        icon: 'fa fa-ticket',
+        // badge: { type: 'danger', content: 5 },
+        items: [
+          { label: 'All', to: '/tickets' },
+          { label: 'Add New', to: '/tickets/create' }
+        ]
       },
-
-      { label: 'Extra', type: 'title' },
+      { label: 'Extra', type: 'title', hidden: user.isRoleClient() },
       {
         label: 'Users',
         icon: 'icon-people',
         to: '/users',
+        hidden: !user.can('can.manage.user'),
         items: [
           { label: 'All Uses', to: '/users' },
           { label: 'Add New', to: '/users/create' }
         ]
       }
     ]
+  }
+
+  _user() {
+    let { currentUser } = this.props
+
+    return new user(currentUser)
   }
 
   render() {
@@ -57,6 +70,19 @@ export const DashSidebar = class extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.entities.users[state.session.currentUser]
+  }
+}
+
+const mapDispatchToProps = {}
+
+export const DashSidebar = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashSidebarComponent)
 
 const NavItem = class extends React.Component {
   constructor(props) {
@@ -87,8 +113,12 @@ const NavItem = class extends React.Component {
   }
 
   render() {
-    let { type, badge, icon, to, label, items } = this.props
+    let { type, badge, icon, to, label, items, hidden } = this.props
     let { open, active } = this.state
+
+    if (hidden) {
+      return null
+    }
 
     if (type == 'title') {
       return <li className="nav-title">{label}</li>
@@ -99,7 +129,11 @@ const NavItem = class extends React.Component {
       to,
       children: (
         <React.Fragment>
-          {icon ? <i className={`nav-icon ` + icon} /> : null}
+          {icon ? (
+            <i className={`nav-icon ` + icon} />
+          ) : (
+            <i className={`nav-icon fa-circle`} />
+          )}
           {label}
           {badge ? <Badge type={badge.type}>{badge.content}</Badge> : null}
         </React.Fragment>

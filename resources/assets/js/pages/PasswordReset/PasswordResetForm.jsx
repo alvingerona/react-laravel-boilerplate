@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { TextFormLine, PasswordFormLine, NeutralButton } from 'components'
+import { TextFormLine, PasswordFormLine, PositiveButton } from 'shared'
 
 const validate = values => {
   let errors = {}
@@ -49,9 +49,7 @@ export const PasswordResetFormComponent = props => {
         component={PasswordFormLine}
       />
 
-      <NeutralButton className="float-right" type="submit">
-        Set New Password
-      </NeutralButton>
+      <PositiveButton type="submit">Set New Password</PositiveButton>
     </form>
   )
 }

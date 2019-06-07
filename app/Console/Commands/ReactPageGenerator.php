@@ -92,6 +92,9 @@ class ReactPageGenerator extends Command
         return "import React from 'react'
 import { connect } from 'react-redux'
 
+import { CardDash } from 'components/Ui'
+import { setDashboardTitle } from 'store/action-creators/page'
+
 class PageComponent extends React.Component {
     componentDidMount() {
       this.props.setDashboardTitle('PAGE TITLE HERE')

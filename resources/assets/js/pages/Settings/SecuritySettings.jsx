@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Col, Row } from '../../components/Ui'
-
+import { Col, Row } from 'shared'
 import { ChangePassword } from './Blocks'
 
 class SecurityComponent extends React.Component {

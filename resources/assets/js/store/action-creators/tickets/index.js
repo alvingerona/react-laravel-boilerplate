@@ -1,1 +1,7 @@
-export { loadTickets } from './tickets'
+export {
+  loadTickets,
+  loadStatuses,
+  storeTicket,
+  loadTicket,
+  updateTicket
+} from './tickets'

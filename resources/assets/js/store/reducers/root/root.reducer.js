@@ -8,6 +8,9 @@ import { flashMessagesReducer } from '../ui/flashMessages.reducer'
 import { requestReducer } from '../requests/requests.reducer'
 import { pageReducer } from '../page/page.reducer'
 import { notificationReducer } from '../notifications/notifications.reducer'
+import { projectReducer } from '../project/project.reducer'
+import { priorityTypes } from '../priorityTypes/priorityTypes.reducer'
+import { miscReducer } from '../misc/misc.reducer'
 
 const rootReducer = combineReducers({
   entities: entitiesReducer,
@@ -17,7 +20,10 @@ const rootReducer = combineReducers({
   flashMessages: flashMessagesReducer,
   requests: requestReducer,
   page: pageReducer,
-  notifications: notificationReducer
+  notifications: notificationReducer,
+  project: projectReducer,
+  priorityTypes: priorityTypes,
+  misc: miscReducer
 })
 
 export default rootReducer

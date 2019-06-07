@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { CardDash } from '../../components/Ui'
+import { CardDash } from 'shared'
 
 import { UserForm } from './Forms'
-import { actionHttp } from '../../utilities'
+import { actionHttp } from 'utilities'
 import { setDashboard } from 'store/action-creators/page'
 
 class CreateComponent extends React.Component {

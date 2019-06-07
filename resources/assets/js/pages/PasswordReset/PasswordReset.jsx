@@ -8,10 +8,17 @@ import { SubmissionError } from 'redux-form'
 
 import { flashMessage } from 'store/action-creators/flashMessages'
 import { PasswordResetForm } from './PasswordResetForm'
+import { CardDash, Row } from 'shared'
 
 export const PasswordResetComponent = props => {
   const { submitPasswordReset } = props
-  return <PasswordResetForm onSubmit={submitPasswordReset} />
+  return (
+    <Row>
+      <CardDash md={12} title="Reset Password">
+        <PasswordResetForm onSubmit={submitPasswordReset} />
+      </CardDash>
+    </Row>
+  )
 }
 
 const parseValidationFromResponse = data => {

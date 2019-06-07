@@ -11,11 +11,10 @@ use League\Fractal\TransformerAbstract;
  */
 class RoleTransformer extends TransformerAbstract
 {
-    private $fileSystem;
 
     public function __construct()
     {
-        $this->fileSystem = resolve('Illuminate\Contracts\Filesystem\Factory');
+
     }
 
     /**
@@ -25,11 +24,12 @@ class RoleTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(Role $model)
+    public function transform($model)
     {
         return [
             'id' => (int) $model->id,
             'name' => $model->name,
+            'label' => ucfirst($model->name)
         ];
     }
 }

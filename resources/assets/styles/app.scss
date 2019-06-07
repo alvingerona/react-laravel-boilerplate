@@ -30,6 +30,7 @@ textarea {
 
 @import 'utilities/animations';
 @import 'utilities/colors';
+@import 'utilities/text-editor';
 
 .fileupload-hidden {
   position: absolute;
@@ -62,5 +63,17 @@ textarea {
       position: absolute;
       width: 100%;
     }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hover-panel-label {
+  position: relative;
+
+  &:hover {
+    opacity: 0.7;
   }
 }

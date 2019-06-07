@@ -1,10 +1,9 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { NeutralButton, TextFormLine, PositiveButton } from 'components'
+import { NeutralButton, TextFormLine, PositiveButton, Form } from 'shared'
 import { linkStyle } from 'constants/styles'
 import { email as emailRegex } from 'constants/regexes'
-import { Form } from 'components/Ui'
 
 const validate = values => {
   let errors = {}

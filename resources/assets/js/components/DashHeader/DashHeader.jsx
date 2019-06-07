@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Logo, UserCard } from 'components'
-import { NavbarToggler, NavbarUnlist, NavbarLink } from '../Ui'
+import { NavbarToggler, NavbarUnlist, NavbarLink } from 'shared'
 
 export const DashHeader = class extends React.Component {
   constructor(props) {

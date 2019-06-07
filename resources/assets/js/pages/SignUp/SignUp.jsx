@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { actionHttp } from '../../utilities'
-import { Card } from '../../components/Ui'
+import { actionHttp } from 'utilities'
+import { Card } from 'shared'
 import SignUpForm from './SignUpForm'
 
 export const SignUpComponent = props => {

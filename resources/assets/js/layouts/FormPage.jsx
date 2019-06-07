@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Row, Col, Container } from 'components/Ui'
+import { Row, Col, Container } from 'shared'
 
 export const FormPageLayout = ({ children, md }) => {
   return (

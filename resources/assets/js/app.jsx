@@ -42,9 +42,9 @@ export const App = props => (
           <Route
             exact
             path="/login"
-            render={() => (
+            render={props => (
               <FormPageLayout md="6">
-                <LogIn />
+                <LogIn {...props} />
               </FormPageLayout>
             )}
           />
@@ -70,7 +70,7 @@ export const App = props => (
             exact
             path="/reset-password/:resetToken"
             render={() => (
-              <FormPageLayout title="Reset Password">
+              <FormPageLayout title="Reset Password" md="6">
                 <PasswordReset />
               </FormPageLayout>
             )}
@@ -81,7 +81,7 @@ export const App = props => (
           <Route path="/settings" component={withDashboard(SettingsRoutes)} />
           <Route path="/users" component={withDashboard(UsersRoutes)} />
           <Route path="/tickets" component={withDashboard(TicketsRoutes)} />
-
+        
           {/* 404 route */}
           <Route path="*" exact={true} render={() => <NotFound />} />
         </Switch>

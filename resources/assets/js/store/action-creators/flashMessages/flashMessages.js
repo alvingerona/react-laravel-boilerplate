@@ -5,7 +5,7 @@ import { flashMessageActions as actions } from 'store/actions'
 export const flashMessage = (
   type,
   message,
-  timeOut = 5000
+  timeOut = 10000
 ) => async dispatch => {
   const uid = Date.now()
 

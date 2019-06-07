@@ -6,6 +6,7 @@ use App\Contracts\Repository\UserRepositoryContract as UserRepository;
 use Illuminate\Contracts\Routing\ResponseFactory as Response;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\SignupWelcome;
 
 class StoreUserService
 {
@@ -45,6 +46,32 @@ class StoreUserService
         }
     }
 
+
+    private function setupData($data)
+    {
+        $userData = [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email']
+        ];
+        $roleId = null;
+
+        if(isset($data['password']) && trim($data['password']) != "")
+        {
+            $userData = $data['password'];
+        }
+
+        if(isset($data['role']) && $data['role'])
+        {
+            $roleId = $data['role'];
+        }
+
+        return [
+            'user_data' => $userData,
+            'role_id' => $roleId
+        ];
+    }    
+
     public function storeUser($userInfo)
     {
         $validator = $this->validateData($userInfo);
@@ -53,6 +80,14 @@ class StoreUserService
             throw new ValidationException($validator);
         }
 
-        return $this->user->create($userInfo);
+        $data = $this->setupData($userInfo);
+
+        $user = $this->user->create($userInfo);
+
+        $this->user->updateRole($data['role_id'], $user['data']['id']);
+
+        $this->user->findOne($user['data']['id'])->notify(new SignupWelcome());
+
+        return $user;
     }
 }

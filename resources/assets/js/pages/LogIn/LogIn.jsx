@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { SubmissionError } from 'redux-form'
 
 import { logIn } from 'store/action-creators/session'
-import { CardGroup, Card, CardBody, Button } from '../../components/Ui'
+import { CardGroup, Card } from 'shared'
 import LogInForm from './LogInForm'
 
 export const LogInComponent = props => {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { CardDash } from '../../components/Ui'
+import { CardDash } from 'shared'
 
 import { UserForm } from './Forms'
-import { actionHttp } from '../../utilities'
+import { actionHttp } from 'utilities'
 import { setDashboard } from 'store/action-creators/page'
 
 class EditComponent extends React.Component {
@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => ({
     return new actionHttp()
       .setDispatch(dispatch)
       .setSuccessMessage('Successfully updated user.')
-      .onSuccess(() => history.push('/users/active'))
+      .onSuccess(() => history.push('/users'))
       .put('update-user', `/api/users/${userId}`, data)
   },
   loadUser: (userId, callback) => {

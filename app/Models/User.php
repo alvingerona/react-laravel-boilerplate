@@ -6,10 +6,17 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Scopes\UserScope;
+use App\Models\Relations\UserRelation;
+use App\Models\Attributors\UserAttributor;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, HasRoles;
+    use HasApiTokens, Notifiable, HasRoles, UserScope, UserRelation, UserAttributor;
+
+    const ROLE_CLIENT = "employee";
+    const ROLE_SUPPORT = "support";
+    const ROLE_ADMIN = "admin";
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'avatar'

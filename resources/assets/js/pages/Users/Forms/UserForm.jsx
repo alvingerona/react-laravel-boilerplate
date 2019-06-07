@@ -6,10 +6,10 @@ import {
   PositiveButton,
   TextFormRow,
   PasswordFormRow,
-  SelectRoleFromRow
-} from 'components'
+  Form as FormUi,
+  SelectRoleFormRow
+} from 'shared'
 import { email as emailRegex } from 'constants/regexes'
-import { Form as FormUi } from 'components/Ui'
 
 export class FormComponent extends React.Component {
   render() {
@@ -24,7 +24,7 @@ export class FormComponent extends React.Component {
         <Field
           name="role"
           required
-          component={SelectRoleFromRow}
+          component={SelectRoleFormRow}
           labelText="System Role"
         />
 

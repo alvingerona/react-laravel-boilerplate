@@ -6,6 +6,7 @@ use Illuminate\Contracts\Routing\ResponseFactory as Response;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Http\Request;
 
 class ResetPasswordService
 {
@@ -31,7 +32,7 @@ class ResetPasswordService
         $user->save();
     }
 
-    public function sendResetResponse(Request $request, $message)
+    public function sendResetResponse($message)
     {
         return $this->response->success(['message' => $message]);
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { PasswordFormRow, PositiveButton } from 'components'
+import { PasswordFormRow, PositiveButton } from 'shared'
 
 class ChangePasswordFormComponent extends React.Component {
   render() {

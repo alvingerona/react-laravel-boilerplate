@@ -1,8 +1,15 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import { Table, TableHead, TableRows, ModalNotif } from 'components/Ui'
-import { DeleteButton, EditButton } from 'components'
+import {
+  Table,
+  TableHead,
+  TableRows,
+  ModalNotif,
+  PaginationDynamic,
+  DeleteButton,
+  EditButton 
+} from 'shared'
 import { flashMessage } from 'store/action-creators/flashMessages'
 
 class UsersComponent extends React.Component {
@@ -26,7 +33,8 @@ class UsersComponent extends React.Component {
         key: 'email'
       },
       {
-        label: 'Role'
+        label: 'Role',
+        key: 'role.label'
       },
       {
         label: 'Actions',
@@ -84,20 +92,29 @@ class UsersComponent extends React.Component {
   }
 
   render() {
-    let { users } = this.props
+    let { users, onPageLink, pagination } = this.props
 
     if (!users) {
       return null
     }
 
+    let pageProps = {
+      pagination,
+      onPageLink
+    }
+
     return (
       <Fragment>
+        <PaginationDynamic {...pageProps} />
+
         <Table striped bordered>
           <TableHead columns={this._columns()} />
           <tbody>
             <TableRows rows={users} columns={this._columns()} />
           </tbody>
         </Table>
+
+        <PaginationDynamic {...pageProps} />
 
         <DeleteModal {...this._deleteModalProps()} />
       </Fragment>

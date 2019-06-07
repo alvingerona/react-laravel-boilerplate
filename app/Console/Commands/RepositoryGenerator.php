@@ -42,10 +42,10 @@ class RepositoryGenerator extends Command
         $contractName = $this->contractName($name);
         $appPath = base_path()  . "/app";
         $contractPath = $appPath . '/Contracts/Repository/' . $contractName . '.php';
-        $repoName = ucfirst($name) . 'Repository';
+        $repoName = trim(ucfirst($name)) . 'Repository';
         $repoPath =  $appPath . '/Repositories/Eloquent/' . $repoName . '.php';
         $model = ucfirst($this->argument('model'));
-        $modelPath = $appPath . "/Models/" . $model . ".php";
+        $modelPath = $appPath . "/Models/" . trim($model) . ".php";
 
         if(file_exists($repoPath))
         {
@@ -75,7 +75,7 @@ class RepositoryGenerator extends Command
 
     private function contractName($name)
     {
-        return ucfirst($name) . 'RepositoryContract ';   
+        return trim(ucfirst($name)) . 'RepositoryContract';
     }
 
     private function contractContents($name)

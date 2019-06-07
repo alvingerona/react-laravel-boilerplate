@@ -4,11 +4,10 @@ import { connect } from 'react-redux'
 import {
   DashHeader,
   AppFooter,
-  NavTabLinks,
   DashSidebar,
   Breadcrumb
-} from '../../components'
-import { Row } from '../../components/Ui'
+} from 'components'
+import { Row, NavTabLinks } from 'shared'
 import { setDashCurrentPath } from 'store/action-creators/page'
 import './Dashboard.scss'
 
@@ -18,7 +17,7 @@ export const DashboardLayoutComponent = class extends React.Component {
 
     this.state = {
       showSidebar: true,
-      minSidebar: false,
+      minSidebar: true,
       showMobileSidebar: false
     }
 

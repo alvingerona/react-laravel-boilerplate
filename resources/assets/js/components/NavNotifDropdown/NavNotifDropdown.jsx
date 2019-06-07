@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
+import { Link } from 'react-router-dom'
 import {
   Badge,
   NavItemDropdown,
   DropdownItem,
   DropdownHeader
-} from 'components/Ui'
+} from 'shared'
 import { headLoadByLatest, markRead } from 'store/action-creators/notifications'
 
-const notifLimit = 5
+const notifLimit = 10
 
 class NavNotifDropdownComp extends Component {
   constructor(props) {
@@ -79,7 +79,7 @@ class NavNotifDropdownComp extends Component {
             <DropdownItem
               key={i}
               iconClass={type.iconClass}
-              to="/settings/user"
+              role="span"
               label={<Comp data={notifi.data} />}
             />
           )
@@ -110,12 +110,63 @@ export const NavNotifDropdown = connect(
   mapDispatchToProps
 )(NavNotifDropdownComp)
 
+
 const SingupWelcome = ({ data }) => <span>{data.welcomeNote}</span>
+
+const CommentStore = ({ data }) => {
+  let comment = data.commentData.data;
+  let postBy  = comment.posted_by.data;
+  let ticketKey = comment.ticket_key ? comment.ticket_key : null;
+
+  return <Link to={`/tickets/browse/${comment.ticket_id}`}>
+    <strong>{postBy.name}</strong> posted comment at <strong>{ticketKey}</strong>
+  </Link>;
+};
+
+const TicketUpdate = ({ data }) => {
+  let ticket = data.ticketData.data;
+
+  return <Link to={`/tickets/browse/${ticket.id}`}>Ticket <strong>{ticket.key}</strong> has been updated</Link>;
+}
+
+const TicketStore = ({ data }) => {
+  let ticket = data.ticketData.data;
+
+  return <Link to={`/tickets/browse/${ticket.id}`}>New Ticket has been created <strong>{ticket.key}</strong></Link>;
+}
+
+const TicketStatusChange = ({ data }) => {
+  let ticket = data.ticketData.data;
+  let { status } = ticket;
+  status = status.data;
+
+  return <Link to={`/tickets/browse/${ticket.id}`}><strong>{ticket.key}</strong> status change to <strong>{status.label}</strong></Link>;
+}
 
 const typeComponents = [
   {
     type: 'App\\Notifications\\SignupWelcome',
     component: SingupWelcome,
-    iconClass: 'fa fa-ticket"'
+    iconClass: 'fa fa-lock"'
+  },
+  {
+    type: 'App\\Notifications\\CommentStore',
+    component: CommentStore,
+    iconClass: 'fa fa-comment'
+  },
+  {
+    type: 'App\\Notifications\\TicketUpdate',
+    component: TicketUpdate,
+    iconClass: 'fa fa-ticket'
+  },
+  {
+    type: 'App\\Notifications\\TicketStore',
+    component: TicketStore,
+    iconClass: 'fa fa-ticket'
+  },
+  {
+    type: 'App\\Notifications\\TicketStatusChange',
+    component: TicketStatusChange,
+    iconClass: 'fa fa-area-chart'
   }
 ]

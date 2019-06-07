@@ -1,4 +1,4 @@
-export const appName = 'Ticketer Pro'
-export const appNameShort = 'T/P'
+export const appName = 'React + Laravel'
+export const appNameShort = 'R+L'
 export const authorURL = 'https://github.com'
 export const authorName = 'Developer'

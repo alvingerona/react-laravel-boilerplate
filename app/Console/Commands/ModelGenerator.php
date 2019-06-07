@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use File;
 
 /**
  * Sample command: php artisan develop:generator-model Breed
@@ -70,8 +71,7 @@ class ModelGenerator extends Command
             fwrite($file, $scopeContents);
             fclose($file);
 
-            File::chmod($file, 0777);
-            //$this->line('<fg=yellow>Update file permisson: sudo chmod -R 777 ' . $scopePath . '</>');            
+            File::chmod($scopePath, 0777);     
         }
 
         $relationContents = $this->relationContents($model, $relation);
@@ -84,9 +84,7 @@ class ModelGenerator extends Command
             fwrite($file, $relationContents);
             fclose($file);
 
-            File::chmod($file, 0777);
-
-          //  $this->line('<fg=yellow>Update file permisson: sudo chmod -R 777 ' . $relationPath . '</>');
+            File::chmod($relationPath, 0777);
         }      
 
         $attributorContents = $this->attributorContents($model, $attributor);
@@ -99,8 +97,7 @@ class ModelGenerator extends Command
             fwrite($file, $attributorContents);
             fclose($file);
 
-            File::chmod($file, 0777);
-            //$this->line('<fg=yellow>Update file permisson: sudo chmod -R 777 ' . $attributorPath . '</>');
+            File::chmod($attributorPath, 0777);
         }            
     }
 

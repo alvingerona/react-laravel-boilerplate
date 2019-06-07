@@ -17,7 +17,6 @@ export class AuthGuardComponent extends React.Component {
 
     if (!currentUserId) {
       const response = await authOrRedirect()
-
       if (response && response.status === 200) {
         this.setState({
           loading: false

@@ -39,15 +39,62 @@ class actionHttpClass {
     return this
   }
 
-  get(actionType, endPoint, params) {
+  get(actionType, endPoint, params, opts) {
+    if (!opts) {
+      opts = {}
+    }
+
     return this._dispatch(
       makeRequest(actionType, () =>
         axios
           .get(endPoint, { params })
-          .then(resp => this._onSuccess(resp))
+          .then(resp => {
+            if (opts.onSuccess) {
+              opts.onSuccess(resp)
+            }
+
+            this._onSuccess(resp)
+          })
           .catch(err => this._onError(err))
       )
     )
+  }
+
+  /**
+   * This expect the endPoint have response format like:
+   * {
+   *    data: {
+   *      data: [...],
+   *      meta: {
+   *          pagination: {
+   *            count: 9, current_page: 1, per_page: 15,
+   *            total: 9, total_pages: 1
+   *          }
+   *      }
+   *    }
+   * }
+   */
+  lazyGet(actionType, endPoint, params) {
+    if (!params) {
+      params = {}
+    }
+
+    if (!params.page) {
+      params.page = 1
+    }
+
+    return this.get(actionType, endPoint, params, {
+      onSuccess: resp => {
+        let { pagination } = resp.data.data.meta
+
+        if (pagination.total_pages > pagination.current_page) {
+          params.page = pagination.current_page + 1
+          setTimeout(() => {
+            this.lazyGet(actionType, endPoint, params)
+          }, 2000)
+        }
+      }
+    })
   }
 
   post(actionType, endPoint, params) {
@@ -66,6 +113,17 @@ class actionHttpClass {
       makeRequest(actionType, () =>
         axios
           .put(endPoint, params)
+          .then(resp => this._onSuccess(resp))
+          .catch(err => this._onError(err))
+      )
+    )
+  }
+
+  delete(actionType, endPoint, params) {
+    return this._dispatch(
+      makeRequest(actionType, () =>
+        axios
+          .delete(endPoint, params)
           .then(resp => this._onSuccess(resp))
           .catch(err => this._onError(err))
       )
@@ -125,12 +183,16 @@ class actionHttpClass {
 const parseValidationErrorResponse = (error, dispatch) => {
   let {
     response: {
-      data: { errors, message }
+      data: { errors, message, messages }
     }
   } = error
 
   if (!errors) {
     errors = {}
+  }
+
+  if (!message) {
+    message = messages[Object.keys(messages)[0]]
   }
 
   if (message) {

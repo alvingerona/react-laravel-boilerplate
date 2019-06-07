@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 
-import { PositiveButton, TextFormRow, PictureUpload } from 'components'
+import { PositiveButton, TextFormRow } from 'shared'
+import { PictureUpload } from 'components'
 import { email as emailRegex } from 'constants/regexes'
 
 export class UserSettingsFormComponent extends React.Component {

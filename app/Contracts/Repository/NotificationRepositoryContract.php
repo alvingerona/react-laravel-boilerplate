@@ -9,7 +9,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *
  * @package namespace App\Repositories;
  */
-interface NotificationRepository extends RepositoryInterface
+interface NotificationRepositoryContract extends RepositoryInterface
 {
     //
 }

@@ -1,19 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Col, Row } from '../../components/Ui'
-
 import { BasicSettings } from './Blocks'
+import { CardDash } from 'shared'
 
 class UserSettingsComponent extends React.Component {
   render() {
     return (
-      <Row>
-        <Col xl={3} lg={4} md={4}>
-          <h3 className="text-grey-darkest font-normal">Your Details</h3>
-          <BasicSettings />
-        </Col>
-      </Row>
+      <CardDash xl={5} lg={6} md={6} title="Your Details">
+        <BasicSettings />
+      </CardDash>
     )
   }
 }

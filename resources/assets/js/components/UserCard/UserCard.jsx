@@ -11,7 +11,7 @@ import {
   NavbarUnlist,
   NavItemDropdown,
   DropdownHeader
-} from 'components/Ui'
+} from 'shared'
 
 export const UserCardComponent = class extends React.Component {
   constructor(props) {

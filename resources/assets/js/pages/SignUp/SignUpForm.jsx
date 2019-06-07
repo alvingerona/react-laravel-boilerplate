@@ -5,11 +5,11 @@ import {
   NeutralButton,
   PositiveButton,
   PasswordFormLineIcon,
-  TextFormLineIcon
-} from 'components'
+  TextFormLineIcon,
+  Form
+} from 'shared'
 import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
-import { Form } from 'components/Ui'
 
 const validateSignUp = values => {
   let errors = {}

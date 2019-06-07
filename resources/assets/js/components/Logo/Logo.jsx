@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { NavbarBrand } from '../Ui'
+import { NavbarBrand } from 'shared'
 import { appName, appNameShort } from 'constants/general'
 
 // import './Logo.scss'

@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 import { makeRequest } from 'store/action-creators/requests'
+import { actionHttp } from '../../../utilities'
+import { userActions } from 'store/actions'
 
 export const addUser = userData => async dispatch => {
   const response = await dispatch(
@@ -41,10 +43,44 @@ export const changePassword = data => async dispatch => {
   return response
 }
 
-export const usersList = filter => async dispatch => {
-  const response = await dispatch(
-    makeRequest('load-users', () => axios.get(`/api/users`, filter))
-  )
+// export const usersList = filter => async dispatch => {
+//   const response = await dispatch(
+//     makeRequest('load-users', () => axios.get(`/api/users`, filter))
+//   )
 
-  return response
+//   return response
+// }
+
+export const usersList = (dispatch, filter, params) => {
+  return new actionHttp()
+    .setDispatch(dispatch)
+    .onSuccess(resp => {
+      if (params && params.onSuccess) {
+        params.onSuccess(resp.data.data.data, resp.data.data.meta)
+      }
+
+      dispatch({
+        type: userActions.LIST_USERS,
+        listUsers: resp.data.data.data
+      })
+    })
+    .onError(resp => {
+      console.log(resp)
+    })
+    .get('load-users', '/api/users', filter)
+}
+
+export const generateReport = (dispatch, {fields, onComplete, onSuccess }) => {
+
+  return new actionHttp()
+    .setDispatch(dispatch)
+    .onSuccess(resp => {
+      onComplete()
+      onSuccess(resp.data.url)
+    })
+    .onError(resp => {
+      onComplete()
+    })
+    .get('report-ticket', `/api/users/generate-report`, fields)  
+
 }
