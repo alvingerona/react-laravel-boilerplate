@@ -9,7 +9,7 @@ import { setDashboardTabs, setDashboardTitle } from 'store/action-creators/page'
 
 export class UsersRoutesComponent extends Component {
   componentDidMount() {
-    //  this.props.setDashboardTabs(this._tabs())
+    this.props.setDashboardTabs(this._tabs())
   }
 
   _tabs() {

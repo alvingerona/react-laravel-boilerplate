@@ -6,14 +6,6 @@ import { miscActions } from 'store/actions'
 
 const { misc } = initialState
 
-const defaultTicketCreate = (state, { data }) => {
-  const newState = cloneDeep(state)
-
-  newState.default_ticket_create = data
-
-  return newState
-}
-
 const overview = (state, { data }) => {
   const newState = cloneDeep(state)
 
@@ -23,6 +15,5 @@ const overview = (state, { data }) => {
 }
 
 export const miscReducer = createReducer(misc, {
-  [miscActions.DEFAULT_TICKET_CREATE]: defaultTicketCreate,
   [miscActions.OVERVIEW]: overview
 })

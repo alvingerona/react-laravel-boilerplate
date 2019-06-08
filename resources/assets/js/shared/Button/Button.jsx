@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { ButtonGroup as BSButtonGroup } from 'reactstrap';
+
+const baseButtonStyles = 'font-semibold'
 
 export const Button = ({ type, className, to, children, submit, button, ...rest }) => {
   let classNames = ['btn']
@@ -34,9 +37,6 @@ export const Button = ({ type, className, to, children, submit, button, ...rest 
 
   return <button {...props} />
 }
-
-
-const baseButtonStyles = 'font-semibold'
 
 export const NeutralButton = ({
   className = '',
@@ -153,3 +153,12 @@ export const TrashButton = ({
     {label ? ` ${label}` : null}
   </Button>
 )
+
+export const ButtonGroup = ({ children, items, ...rest }) =>{
+
+  if(items){
+    children = items.map((item, i) => (<Button to={item.to} key={i}>{item.label}</Button>));
+  }
+
+  return (<BSButtonGroup {...rest} children={children} />)
+}

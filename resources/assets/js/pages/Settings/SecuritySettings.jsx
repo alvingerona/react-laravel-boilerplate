@@ -1,19 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Col, Row } from 'shared'
+import { CardDash } from 'shared'
 import { ChangePassword } from './Blocks'
+import { setDashboardTitle, setBreadcrumb } from 'store/action-creators/page'
 
 class SecurityComponent extends React.Component {
+  componentDidMount(){
+    this.props.setBreadcrumb();
+  }
+  
   render() {
     return (
-      <Row>
-        <Col xl={3} lg={4} md={4}>
-          <h3 className="text-grey-darkest font-normal">
-            Change Your Password
-          </h3>
-          <ChangePassword />
-        </Col>
-      </Row>
+      <CardDash xl={5} lg={6} md={6} title="Change Password">
+        <ChangePassword />
+      </CardDash>
     )
   }
 }
@@ -22,7 +22,13 @@ const mapStateToProps = state => {
   return {}
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  setDashboardTitle: title => setDashboardTitle(dispatch, title),
+  setBreadcrumb: () => setBreadcrumb(dispatch, [
+    {label: "Settings", to: '/'},
+    {label: "Security Details", to: '/settings/security'},
+  ])
+})
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...stateProps,

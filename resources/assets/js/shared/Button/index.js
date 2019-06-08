@@ -8,5 +8,6 @@ export {
     DeleteButton,
     EditButton,
     CancelButton,
-    TrashButton    
+    TrashButton,
+    ButtonGroup
 } from './Button';

@@ -2,5 +2,8 @@ export {
   setDashboardTabs,
   setDashboardTitle,
   setDashboard,
-  setDashCurrentPath
+  setDashCurrentPath,
+  addBreadcrumb,
+  clearBreadcrumb,
+  setBreadcrumb
 } from './page'

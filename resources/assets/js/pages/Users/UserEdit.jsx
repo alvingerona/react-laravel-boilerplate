@@ -13,11 +13,16 @@ class EditComponent extends React.Component {
       user: null
     }
   }
+
   componentDidMount() {
     let { loadUser, setDashboard, match } = this.props
 
     setDashboard({
-      title: 'Edit User'
+      title: 'Edit User',
+      breadcrumb: [
+        {label: "Users", to: '/users'},
+        {label: "Edit"}
+      ]
     })
 
     loadUser(match.params.userId, user => {

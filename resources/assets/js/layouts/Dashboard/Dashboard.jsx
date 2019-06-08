@@ -7,7 +7,7 @@ import {
   DashSidebar,
   Breadcrumb
 } from 'components'
-import { Row, NavTabLinks } from 'shared'
+import { Row } from 'shared'
 import { setDashCurrentPath } from 'store/action-creators/page'
 import './Dashboard.scss'
 
@@ -30,9 +30,10 @@ export const DashboardLayoutComponent = class extends React.Component {
   }
 
   _breadcrumb() {
+    let { breadcrumbItems } = this.props;
+    
     return {
-      items: [{ label: 'DashBoard', to: '/' }],
-      menu: []
+      items: [{ label: 'DashBoard', to: '/' }, ...breadcrumbItems]
     }
   }
 
@@ -115,24 +116,34 @@ export const DashboardLayoutComponent = class extends React.Component {
   }
 }
 
-const DashRight = ({ dashTitle, children, pageTabProps, breadcrumb }) => (
-  <main className="main dashboard-right">
-    <Breadcrumb {...breadcrumb} mobileContent={<strong>{dashTitle}</strong>} />
+const DashRight = ({ dashTitle, children, pageTabProps, breadcrumb }) => {
 
-    <NavTabLinks {...pageTabProps} />
-    <div className="container-fluid">
-      <div className="animated fadeIn">
-        <Row>{children}</Row>
+  breadcrumb.items.push({
+    type: "menu",
+    items: pageTabProps.tabs
+  });
+
+  return (
+    <main className="main dashboard-right">
+      <Breadcrumb {...breadcrumb} mobileContent={<strong>{dashTitle}</strong>} />
+  
+      {/* <NavTabLinks {...pageTabProps} /> */}
+      <div className="container-fluid">
+        <div className="animated fadeIn">
+          <Row>{children}</Row>
+        </div>
       </div>
-    </div>
-  </main>
-)
+    </main>
+  )
+}
 
 const mapStateToProps = state => {
+
   return {
     dashTabs: state.page.dashboardTabs,
     dashTitle: state.page.dashboardTitle,
-    dashPath: state.page.dashboardPath
+    dashPath: state.page.dashboardPath,
+    breadcrumbItems: state.page.breadcrumb
   }
 }
 

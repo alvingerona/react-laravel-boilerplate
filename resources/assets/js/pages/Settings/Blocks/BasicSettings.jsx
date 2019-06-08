@@ -6,10 +6,14 @@ import { userActions } from 'store/actions'
 import { uploadUserAvatar } from 'store/action-creators/avatars'
 import { flashMessage } from 'store/action-creators/flashMessages'
 import { saveUser } from 'store/action-creators/user'
-
+import {  } from 'store/action-creators/page'
 import { UserSettingsForm } from '../Forms'
 
 class BasicSettingsComponent extends React.Component {
+  componentDidMount(){
+
+  }
+
   render() {
     const { saveUserSettings, avatarUploadHandler } = this.props
 

@@ -9,7 +9,11 @@ import { setDashboard } from 'store/action-creators/page'
 class CreateComponent extends React.Component {
   componentDidMount() {
     this.props.setDashboard({
-      title: 'Create User'
+      title: 'Create User',
+      breadcrumb: [
+        {label: "Users", to: '/users'},
+        {label: "Create"}
+      ]
     })
   }
 
@@ -17,7 +21,7 @@ class CreateComponent extends React.Component {
     let { handleSubmit } = this.props
 
     return (
-      <CardDash md={6} title="Create New User">
+      <CardDash md={6}>
         <UserForm onSubmit={handleSubmit} />
       </CardDash>
     )

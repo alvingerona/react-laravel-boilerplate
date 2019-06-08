@@ -17,7 +17,7 @@ export class NavTabLinks extends Component {
     let pathName = location.pathname
 
     return (
-      <Nav tabs>
+      <div>
         {tabs.map((tab, i) => {
           let btnProps = {
             to: tab.to,
@@ -29,12 +29,10 @@ export class NavTabLinks extends Component {
           }
 
           return (
-            <NavItem key={i}>
-              <Link {...btnProps}>{tab.label}</Link>
-            </NavItem>
+            <NavItem {...btnProps} key={i} label={tab.label} />
           )
         })}
-      </Nav>
+      </div>
     )
   }
 }

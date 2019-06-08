@@ -18,7 +18,10 @@ export const userActions = {
 export const pageActions = {
   SET_DASHBOARD_TABS: 'PAGE/SET_DASHBOARD_TABS',
   SET_DASHBOARD_TITLE: 'PAGE/SET_DASHBOARD_TITLE',
-  SET_DASHBOARD_PATH: 'PAGE/SET_DASHBOARD_PATH'
+  SET_DASHBOARD_PATH: 'PAGE/SET_DASHBOARD_PATH',
+  SET_DASHBOARD_BREADCRUMB: 'PAGE/SET_DASHBOARD_BREADCRUMB',
+  ADD_DASHBOARD_BREADCRUMB: 'PAGE/ADD_DASHBOARD_BREADCRUMB',
+  CLEAR_DASHOARD_BREADCRUMB: 'PAGE/CLEAR_DASHOARD_BREADCRUMB'
 }
 
 export const notificationActions = {
@@ -30,23 +33,8 @@ export const roleActions = {
   LIST_ROLES: 'ROLE/LIST_ROLES'
 }
 
-export const ticketActions = {
-  STATUSES: 'TICKETS/STATUSES'
-}
-
-export const projectActions = {
-  LIST_PROJECTS: 'PROJECT/LIST_PROJECTS'
-}
-
-export const priorityTypeActions = {
-  LIST_TYPES: 'PRIORITY_TYPE/LIST_TYPES'
-}
-
 export const miscActions = {
   DEFAULT_TICKET_CREATE: 'MISC/DEFAULT_TICKET_CREATE',
   OVERVIEW: 'MISC/OVERVIEW'
 }
 
-export const faqActions = {
-  LIST_FAQ: 'FAQ/LIST_FAQ'
-}

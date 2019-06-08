@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { CardDash } from 'shared'
 import { UsersTable } from 'components'
 import { usersList } from 'store/action-creators/user'
-import { setDashboardTitle } from 'store/action-creators/page'
+import { setDashboard } from 'store/action-creators/page'
 
 class UsersComponent extends React.Component {
   constructor(props) {
@@ -16,9 +16,17 @@ class UsersComponent extends React.Component {
     this._loadUsers = this._loadUsers.bind(this)
   }
 
+
   componentDidMount() {
-    this.props.setDashboardTitle('Users')
+    this.props.setDashboard({
+      title: 'Users',
+      breadcrumb: [
+        {label: "Users", to: '/users'}
+      ]
+    })
   }
+
+
 
   _loadUsers({ onCompleted, page }) {
     let { loadUsers } = this.props;
@@ -42,9 +50,7 @@ class UsersComponent extends React.Component {
 
   render() {
     return (
-      <CardDash md={12} title="Active Users">
-        <UsersTable onLoad={this._loadUsers} page={this.props.match.params.page} />
-      </CardDash>
+      <UsersTable onLoad={this._loadUsers} page={this.props.match.params.page} />
     )
   }
 }
@@ -58,7 +64,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setDashboardTitle: title => setDashboardTitle(dispatch, title),
+  setDashboard: opts => setDashboard(dispatch, opts),
   loadUsers: (filter, onSuccess) => usersList(dispatch, filter, {
     onSuccess
   })

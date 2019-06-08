@@ -13,7 +13,7 @@ export const FlashMessageComponent = props => {
   const { flashMessages, handleHideMessage } = props
 
   return (
-    <div className="absolute pin-t pin-r pin-l">
+    <div className="absolute pin-t pin-r pin-l float-alert">
       {flashMessages &&
         Object.keys(flashMessages).map((messageUid, index) => {
           const { type, message } = flashMessages[messageUid]

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { ButtonGroup } from 'shared'
 
 export const Breadcrumb = ({ items, mobileContent }) => {
   return (
@@ -16,12 +17,7 @@ export const Breadcrumb = ({ items, mobileContent }) => {
         {items.map((item, i) => {
           let label = null
           let isActive = false
-
-          if (item.to) {
-            label = <Link to={item.to}>{item.label}</Link>
-          } else {
-            label = item.label
-          }
+          let itemClass = `breadcrumb-item ${isActive ? 'active' : ''}`;
 
           if (i + 1 == items.length) {
             isActive = true
@@ -31,11 +27,16 @@ export const Breadcrumb = ({ items, mobileContent }) => {
             label = item.label
           }
 
+          if(item.type == "menu"){
+            itemClass = "breadcrumb-menu d-md-down-none"
+          }
+
           return (
             <li
-              className={`breadcrumb-item ${isActive ? 'active' : ''}`}
+              className={itemClass}
               key={i}
             >
+              {item.type && item.type == "menu" ? <MenuItem item={item} /> : <SimpleItem item={item} /> }
               {label}
             </li>
           )
@@ -43,4 +44,21 @@ export const Breadcrumb = ({ items, mobileContent }) => {
       </ol>
     </Fragment>
   )
+}
+
+const SimpleItem = ({item, ...rest}) => {
+  let label = null
+
+  if (item.to) {
+    label = <Link to={item.to} className="text-body">{item.label}</Link>
+  } else {
+    label = item.label
+  }
+
+  return label;
+}
+
+const MenuItem = ({item, ...rest}) => {
+
+  return <ButtonGroup items={item.items} />
 }

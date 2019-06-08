@@ -9,7 +9,7 @@ import { setDashboardTabs, setDashboardTitle } from 'store/action-creators/page'
 export class SettingsRoutesComponent extends Component {
   componentDidMount() {
     this.props.setDashboardTabs(this._tabs())
-    this.props.setDashboardTitle('Settings')
+    this.props.setDashboardTitle("Settings");
   }
 
   _tabs() {

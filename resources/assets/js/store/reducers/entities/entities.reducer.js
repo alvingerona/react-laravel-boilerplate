@@ -3,7 +3,7 @@ import { normalize } from 'normalizr'
 import cloneDeep from 'lodash.clonedeep'
 
 import { initialState } from 'store/initialState'
-import { userActions, roleActions, ticketActions } from 'store/actions'
+import { userActions, roleActions } from 'store/actions'
 import { createReducer } from 'store/reducers/utilities'
 import { user as userSchema } from 'store/schemas'
 
@@ -38,17 +38,9 @@ const listRoles = (state, { data }) => {
   return newState
 }
 
-const ticketStatuses = (state, { data }) => {
-  const newState = cloneDeep(state)
-  newState.ticket_statuses = data
-
-  return newState
-}
-
 export const entitiesReducer = createReducer(entities, {
   [userActions.SET_CURRENT_USER_INFO]: addUsersToStore,
   [userActions.SET_AVATAR]: setUserAvatar,
   [userActions.LIST_USERS]: listUsers,
-  [roleActions.LIST_ROLES]: listRoles,
-  [ticketActions.STATUSES]: ticketStatuses
+  [roleActions.LIST_ROLES]: listRoles
 })
