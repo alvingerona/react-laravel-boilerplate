@@ -10,7 +10,7 @@ class EditComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: {}
+      user: null
     }
   }
   componentDidMount() {
@@ -25,9 +25,23 @@ class EditComponent extends React.Component {
     })
   }
 
+  _user(){
+    let user = this.state.user;
+
+    if(!user){
+      return null;
+    }
+
+    return {...user, role: user.role.id};
+  }
+
   render() {
     let { handleSubmit } = this.props
-    let { user } = this.state
+    let user = this._user();
+
+    if(!user){
+      return null;
+    }
 
     return (
       <CardDash md={6} title="Edit User">

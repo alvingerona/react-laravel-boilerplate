@@ -2,13 +2,10 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import {
-  Table,
-  TableHead,
-  TableRows,
   ModalNotif,
-  PaginationDynamic,
   DeleteButton,
-  EditButton 
+  EditButton,
+  TableDynamic
 } from 'shared'
 import { flashMessage } from 'store/action-creators/flashMessages'
 
@@ -19,6 +16,8 @@ class UsersComponent extends React.Component {
       isDeleteModalOpen: false,
       userToDelete: null
     }
+
+    this.tableRef = null;
   }
 
   _columns() {
@@ -92,29 +91,21 @@ class UsersComponent extends React.Component {
   }
 
   render() {
-    let { users, onPageLink, pagination } = this.props
-
-    if (!users) {
-      return null
-    }
-
-    let pageProps = {
-      pagination,
-      onPageLink
-    }
+    let { page, onLoad } = this.props
+    let columns = this._columns();
 
     return (
       <Fragment>
-        <PaginationDynamic {...pageProps} />
 
-        <Table striped bordered>
-          <TableHead columns={this._columns()} />
-          <tbody>
-            <TableRows rows={users} columns={this._columns()} />
-          </tbody>
-        </Table>
-
-        <PaginationDynamic {...pageProps} />
+        <TableDynamic 
+          onRef={ref => (this.tableRef = ref)}
+          page={page}
+          columns={columns} 
+          loadRows={onLoad}
+          onPageLink={({ page }) => {
+            return `/reports/users/${page}`
+          }}
+        />
 
         <DeleteModal {...this._deleteModalProps()} />
       </Fragment>

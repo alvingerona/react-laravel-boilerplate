@@ -21,8 +21,9 @@ class SelectRoleComponent extends Component {
 
   render() {
     let { roles, loadRoles, ...rest } = this.props
+    let options = roles.map(this._option);
 
-    return <SelectInput {...rest} options={roles.map(this._option)} />
+    return <SelectInput {...rest} options={options} />
   }
 }
 

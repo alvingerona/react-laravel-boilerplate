@@ -15,7 +15,7 @@ export const NavbarBrand = ({ to, children, full, min }) => (
     </Link>
 )
   
-export const Nav = prop => <NavBase {...props} />
+export const Nav = (props) => <NavBase {...props} />
 
 /**
  * @var dataToogle

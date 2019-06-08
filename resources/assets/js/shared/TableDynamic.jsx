@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import {
   Table,
   TableHead,
-  TableRows
-} from './Table';
-import { Col } from './Col';
-export { PaginationDynamic } from './Pagination'
-export { ProgressOverlay } from './ProgressOverlay'
-export { Row } from './Row'
+  TableRows,
+  Col,
+  Row,
+  PaginationDynamic,
+  ProgressOverlay
+} from 'shared';
 
 /**
- * column props sample:
+ * Column props sample:
 // [
 //     { label: 'Reporter', key: 'reporter.data.name', component: ColumnName },
 //     {

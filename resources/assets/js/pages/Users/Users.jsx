@@ -10,77 +10,58 @@ class UsersComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pagination: null,
       filter: {}
     }
-  }
-  componentDidMount() {
-    let { page, status } = this.props.match.params
 
-    this._loadUsers({
-      status,
-      page
-    })
+    this._loadUsers = this._loadUsers.bind(this)
+  }
+
+  componentDidMount() {
     this.props.setDashboardTitle('Users')
   }
 
-  componentWillReceiveProps(next) {
-    let currentMatch = this.props.match
-    let nextMatch = next.match
-
-    if (
-      nextMatch.params.page &&
-      nextMatch.params.page != currentMatch.params.page
-    ) {
-      this._loadUsers({ page: nextMatch.params.page })
+  _loadUsers({ onCompleted, page }) {
+    let { loadUsers } = this.props;
+    let { filters } = this.state;
+    
+    if (!page) {
+      page = 1;
     }
-  }
 
-  _loadUsers(filter) {
-    filter = { ...this.state.filter, ...filter }
+    if(!filters){
+      filters = {};
+    }
 
-    this.props.loadUsers(filter, {
-      onSuccess: (data, meta) => {
-        this.setState({ pagination: meta.pagination })
-      }
+    loadUsers({ page, ...filters }, (data, meta) => {
+      onCompleted({
+        rows: data, 
+        pagination: meta.pagination
+      })
     })
   }
 
   render() {
-    let { users } = this.props
-    let { pagination } = this.state
-
     return (
       <CardDash md={12} title="Active Users">
-        <UsersTable
-          users={users}
-          pagination={pagination}
-          onPageLink={({ page }) => {
-            return `/users/${page}`
-          }}
-        />
+        <UsersTable onLoad={this._loadUsers} page={this.props.match.params.page} />
       </CardDash>
     )
   }
 }
 
-const validationFromResponse = values => {
-  let errors = {}
-
-  return errors
-}
-
 const mapStateToProps = state => {
-  let { entities } = state
+ // let { entities } = state
 
   return {
-    users: entities && entities.listUsers ? entities.listUsers : null
+   // users: entities && entities.listUsers ? entities.listUsers : null
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   setDashboardTitle: title => setDashboardTitle(dispatch, title),
-  loadUsers: (filter, params) => usersList(dispatch, filter, params)
+  loadUsers: (filter, onSuccess) => usersList(dispatch, filter, {
+    onSuccess
+  })
 })
 
 export const Users = connect(
