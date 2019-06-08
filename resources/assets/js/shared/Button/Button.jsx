@@ -49,17 +49,19 @@ export const NeutralButton = ({
     {...buttonProps}
     className={`${baseButtonStyles} ${className}`}
   >
-    {children}
     {label}
+    {children}
   </Button>
 )
 
 export const NegativeButton = ({
   className = '',
   children,
+  label,
   ...buttonProps
 }) => (
-  <Button {...buttonProps} className={`${baseButtonStyles} ${className}`}>
+  <Button {...buttonProps} className={`${baseButtonStyles} ${className}`} type="danger">
+    {label}
     {children}
   </Button>
 )
@@ -67,6 +69,7 @@ export const NegativeButton = ({
 export const PositiveButton = ({
   className = '',
   children,
+  label,
   ...buttonProps
 }) => (
   <Button
@@ -74,6 +77,7 @@ export const PositiveButton = ({
     className={`${baseButtonStyles} ${className}`}
     type="primary"
   >
+    {label}
     {children}
   </Button>
 )
@@ -81,8 +85,8 @@ export const PositiveButton = ({
 export const SaveButton = ({ children, label, ...buttonProps }) => (
   <PositiveButton {...buttonProps} type="submit" className="ml-auto">
     <i className="fa fa-save mr-1" />
-    {children}
     {label}
+    {children}
   </PositiveButton>
 )
 
@@ -95,15 +99,16 @@ export const ViewButton = ({
 }) => (
   <Button type="primary" onClick={onClick} to={to} {...buttonProps}>
     <i className="fa fa-search-plus" />
-    {children}
     {label}
+    {children}
   </Button>
 )
 
-export const DeleteButton = ({ children, onClick, ...buttonProps }) => (
+export const DeleteButton = ({ children, onClick, label, ...buttonProps }) => (
   <Button type="danger" onClick={onClick} {...buttonProps}>
     <i className="fa fa-trash-o" />
     {children}
+    {label}
   </Button>
 )
 
@@ -116,8 +121,8 @@ export const EditButton = ({
 }) => (
   <Button type="primary" onClick={onClick} to={to} {...buttonProps}>
     <i className="fa fa-pencil" />
-    {label ? ` ${label}` : null}
     {children}
+    {label ? ` ${label}` : null}
   </Button>
 )
 
@@ -130,8 +135,8 @@ export const CancelButton = ({
 }) => (
   <Button type="danger" onClick={onClick} to={to} {...buttonProps}>
     <i className="fa fa-close" />
-    {label ? ` ${label}` : null}
     {children}
+    {label ? ` ${label}` : null}
   </Button>
 )
 
@@ -144,7 +149,7 @@ export const TrashButton = ({
 }) => (
   <Button type="danger" onClick={onClick} to={to} {...buttonProps}>
     <i className="fa fa-trash" />
-    {label ? ` ${label}` : null}
     {children}
+    {label ? ` ${label}` : null}
   </Button>
 )

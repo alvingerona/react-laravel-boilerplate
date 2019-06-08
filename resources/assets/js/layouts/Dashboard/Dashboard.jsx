@@ -104,7 +104,7 @@ export const DashboardLayoutComponent = class extends React.Component {
     return (
       <div className={appClasses.join(' ')}>
         <DashHeader {...headerProps} />
-        <div styleName="dashboard-wrapper" className="app-body">
+        <div className="app-body dashboard-wrapper">
           <DashSidebar {...sidebarProps} />
           <DashRight {...dashRightProps} />
         </div>
@@ -116,7 +116,7 @@ export const DashboardLayoutComponent = class extends React.Component {
 }
 
 const DashRight = ({ dashTitle, children, pageTabProps, breadcrumb }) => (
-  <main styleName="dashboard-right" className="main">
+  <main className="main dashboard-right">
     <Breadcrumb {...breadcrumb} mobileContent={<strong>{dashTitle}</strong>} />
 
     <NavTabLinks {...pageTabProps} />

@@ -30,7 +30,7 @@ export const UserCardComponent = class extends React.Component {
 
     return (
       <NavbarUnlist className="ml-auto">
-        <NavNotifDropdown />
+        <NavNotifDropdown {...this.prop} />
 
         <NavItemDropdown
           label={

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { DragOverlay } from 'components'
 
-import './PictureUpload.scss'
+//import './PictureUpload.scss'
 import defaultProfileImage from 'default-profile-picture.jpeg'
 
 export class PictureUpload extends React.Component {
@@ -77,14 +77,12 @@ export class PictureUpload extends React.Component {
           <div className="w-25 mb-4 mx-auto position-relative">
             {isHovering && (
               <div
-                styleName="picture-overlay"
-                className="bg-black absolute pin"
+                className="bg-black absolute pin picture-overlay"
               />
             )}
             <img
               src={currentImage}
-              styleName="uploaded-picture"
-              className="img-thumbnail rounded img-fluid "
+              className="img-thumbnail rounded img-fluid uploaded-picture"
               alt="user avatar picture"
             />
           </div>

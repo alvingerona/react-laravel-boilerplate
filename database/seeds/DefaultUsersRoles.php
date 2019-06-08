@@ -15,46 +15,13 @@ class DefaultUsersRoles extends Seeder
     {
         $roles = [
             'support' => [
-                'can.manage.user' => false,
-                'can.manage.ticket.status' => true,
-                'can.manage.ticket.assignee' => true,
-                'can.manage.ticket.priority' => true,
-                'have.kanban' => true,
-                'can.report' => false,
-                'can.ticket.edit' => true,
-                'can.ticket.delete' => true,
-                'can.ticket.change.status' => true,
-                'can.faq.add' => true,
-                'can.faq.delete' => true,
-                'can.faq.edit' => true
+                'can.manage.user' => false
             ], 
             'admin' => [
-                'can.manage.user' => true,
-                'can.manage.ticket.status' => true,
-                'can.manage.ticket.assignee' => true,
-                'can.manage.ticket.priority' => true,
-                'have.kanban' => true,
-                'can.report' => true,
-                'can.ticket.edit' => true,
-                'can.ticket.delete' => true,
-                'can.ticket.change.status' => true,
-                'can.faq.add' => true,
-                'can.faq.delete' => true,
-                'can.faq.edit' => true
+                'can.manage.user' => true
             ], 
             'employee' => [
-                'can.manage.user' => false,
-                'can.manage.ticket.status' => false,
-                'can.manage.ticket.assignee' => false,
-                'can.manage.ticket.priority' => false,
-                'have.kanban' => false,
-                'can.report' => false,
-                'can.ticket.edit' => false,
-                'can.ticket.delete' => false,
-                'can.ticket.change.status' => false,
-                'can.faq.add' => false,
-                'can.faq.delete' => false,
-                'can.faq.edit' => false
+                'can.manage.user' => false
             ]
         ];
 

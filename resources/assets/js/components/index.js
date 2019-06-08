@@ -2,7 +2,6 @@ export { DashHeader } from './DashHeader/DashHeader'
 export { AppFooter } from './AppFooter/AppFooter'
 export { AuthGuard } from './AuthGuard/AuthGuard'
 export { DashSidebar } from './DashSidebar/DashSidebar'
-export { Card, CardContent, CardListItem } from './Card/Card'
 export { DragOverlay } from './DragOverlay/DragOverlay'
 export { FlashMessageRoot } from './FlashMessages/FlashMessageRoot'
 

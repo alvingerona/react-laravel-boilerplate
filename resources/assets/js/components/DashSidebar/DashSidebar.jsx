@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Badge } from 'shared'
-import './DashSidebar.scss'
 import { user } from 'utilities'
 
 const DashSidebarComponent = class extends React.Component {
@@ -18,17 +17,6 @@ const DashSidebarComponent = class extends React.Component {
     let user = this._user()
     return [
       { label: 'Dashboard', to: '/', icon: 'icon-speedometer' },
-      { label: 'Create Ticket', to: '/tickets/create', icon: 'icon-plus' },
-      {
-        label: 'Tickets',
-        to: '/tickets',
-        icon: 'fa fa-ticket',
-        // badge: { type: 'danger', content: 5 },
-        items: [
-          { label: 'All', to: '/tickets' },
-          { label: 'Add New', to: '/tickets/create' }
-        ]
-      },
       { label: 'Extra', type: 'title', hidden: user.isRoleClient() },
       {
         label: 'Users',

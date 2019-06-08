@@ -15,7 +15,6 @@ const ForgotPassword = lazy(() => import('pages/ForgotPassword/ForgotPassword'))
 const NotFound = lazy(() => import('pages/NotFound/NotFound'))
 const SettingsRoutes = lazy(() => import('pages/Settings/SettingsRoutes'))
 const UsersRoutes = lazy(() => import('pages/Users/UsersRoutes'))
-const TicketsRoutes = lazy(() => import('pages/Tickets/TicketsRoutes'))
 
 const withDashboard = ContentComponent => {
   return props => (
@@ -80,7 +79,6 @@ export const App = props => (
           <Route exact path="/" component={withDashboard(Overview)} />
           <Route path="/settings" component={withDashboard(SettingsRoutes)} />
           <Route path="/users" component={withDashboard(UsersRoutes)} />
-          <Route path="/tickets" component={withDashboard(TicketsRoutes)} />
         
           {/* 404 route */}
           <Route path="*" exact={true} render={() => <NotFound />} />

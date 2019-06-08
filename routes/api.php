@@ -23,14 +23,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::delete('/avatars', '\App\Api\Controllers\AvatarsController@delete');
 
     /**
-     * Tickets
-     */
-    Route::get('/tickets', '\App\Api\Controllers\TicketController@index');   
-    Route::post('/tickets', '\App\Api\Controllers\TicketController@store');
-    Route::put('/tickets/{ticketId}', '\App\Api\Controllers\TicketController@update');
-    Route::get('/tickets/{ticketId}', '\App\Api\Controllers\TicketController@show');
-
-    /**
      * Notifications
      */
     Route::get('/notifications/latest', '\App\Api\Controllers\NotificationsController@latest');
