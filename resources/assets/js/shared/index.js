@@ -112,3 +112,8 @@ export {
 export {
   Widget
 } from './Widget'
+export {
+  Tab,
+  TabBar,
+  TabItem
+} from './Tab'

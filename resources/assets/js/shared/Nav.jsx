@@ -1,8 +1,8 @@
 import React from 'react'
-import { Nav as NavBase } from 'reactstrap'
+import { Nav as NavBase, NavLink as NavLinkBase } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-export const NavLink = () => <div />
+export const NavLink = props => <NavLinkBase {...props} />
 
 export const NavbarBrand = ({ to, children, full, min }) => (
     <Link className="navbar-brand" to={to}>
@@ -120,8 +120,6 @@ export const NavItem = class extends React.Component {
         this.setState({ open: !open })
       }
     }
-
-    console.log(linkProps)
 
     return (
       <li
