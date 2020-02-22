@@ -1,26 +1,21 @@
 import React from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { Link } from 'react-router-dom'
+import { Formik, Form, Field } from 'formik'
 
-import {
-  NeutralButton,
-  PositiveButton,
-  PasswordFormLineIcon,
-  TextFormLineIcon,
-  Form
-} from 'shared'
-import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
+import { email as emailRegex } from 'constants/regexes'
+import { PasswordFormLine, TextFormLine, NeutralButton } from 'components'
 
-const validateSignUp = values => {
+const validate = (values = {}) => {
   let errors = {}
 
   if (!values.first_name) {
     errors.first_name = 'This field is required'
   }
 
-  // if (!values.last_name) {
-  //   errors.last_name = 'This field is required'
-  // }
+  if (!values.last_name) {
+    errors.last_name = 'This field is required'
+  }
 
   if (!values.email) {
     errors.email = 'This field is required'
@@ -35,62 +30,47 @@ const validateSignUp = values => {
   return errors
 }
 
-const TextInput = props => <TextFormLineIcon iconClass="icon-user" {...props} />
-
-const EmailInput = props => (
-  <TextFormLineIcon iconClass="icon-envelope" {...props} />
+export const SignUpForm = ({ onSubmit }) => (
+  <Formik
+    validate={validate}
+    onSubmit={onSubmit}
+    initialValues={{ first_name: '', last_name: '', email: '', password: '' }}
+  >
+    {() => (
+      <Form>
+        <Field
+          component={TextFormLine}
+          type="text"
+          name="first_name"
+          labelText="First Name"
+        />
+        <Field
+          component={TextFormLine}
+          type="text"
+          name="last_name"
+          labelText="Last Name"
+        />
+        <Field
+          component={TextFormLine}
+          type="text"
+          name="email"
+          labelText="Email"
+        />
+        <Field
+          component={PasswordFormLine}
+          type="password"
+          name="password"
+          labelText="Password"
+        />
+        <div className="flex items-center">
+          <Link className={linkStyle} to="/login">
+            Or Login
+          </Link>
+          <NeutralButton className="ml-auto" type="submit">
+            Sign Up
+          </NeutralButton>
+        </div>
+      </Form>
+    )}
+  </Formik>
 )
-
-const PasswordInput = props => (
-  <PasswordFormLineIcon iconClass="icon-lock" {...props} />
-)
-
-const SignUpForm = props => {
-  const { handleSubmit, submitting } = props
-
-  return (
-    <Form onSubmit={handleSubmit} loading={submitting}>
-      <Field
-        component={TextInput}
-        type="text"
-        name="first_name"
-        labelText="Name"
-        placeholder="Your name"
-      />
-      {/* <Field
-        component={TextInput}
-        type="text"
-        name="last_name"
-        labelText="Last Name"
-      /> */}
-      <Field
-        component={EmailInput}
-        type="text"
-        name="email"
-        labelText="Email"
-        placeholder="Email address"
-      />
-      <Field
-        component={PasswordInput}
-        type="password"
-        name="password"
-        labelText="Password"
-        placeholder="Password"
-      />
-      <div>
-        <PositiveButton className="mr-2" submit>
-          Sign Up
-        </PositiveButton>
-
-        <NeutralButton className={linkStyle} to="/login">
-          Or Login
-        </NeutralButton>
-      </div>
-    </Form>
-  )
-}
-
-export default reduxForm({
-  form: 'signup',
-  validate: validateSignUp
-})(SignUpForm)

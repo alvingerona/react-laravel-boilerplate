@@ -2,7 +2,7 @@ import React from 'react'
 
 import { DragOverlay } from 'components'
 
-//import './PictureUpload.scss'
+import './PictureUpload.scss'
 import defaultProfileImage from 'default-profile-picture.jpeg'
 
 export class PictureUpload extends React.Component {
@@ -56,7 +56,7 @@ export class PictureUpload extends React.Component {
 
   render() {
     const {
-      input: { name, value },
+      field: { name, value },
       className = ''
     } = this.props
     const { isHovering } = this.state
@@ -74,15 +74,17 @@ export class PictureUpload extends React.Component {
           onDragLeave={this.toggleHover}
           onDrop={this.handleDrop}
         >
-          <div className="w-25 mb-4 mx-auto position-relative">
+          <div className="w-48 h-48 rounded-full mb-4 mx-auto relative overflow-hidden pointer-events-none">
             {isHovering && (
               <div
-                className="bg-black absolute pin picture-overlay"
+                styleName="picture-overlay"
+                className="bg-black absolute pin"
               />
             )}
             <img
               src={currentImage}
-              className="img-thumbnail rounded img-fluid uploaded-picture"
+              styleName="uploaded-picture"
+              className="block"
               alt="user avatar picture"
             />
           </div>
@@ -94,7 +96,7 @@ export class PictureUpload extends React.Component {
           type="file"
           id={name}
           name={name}
-          className="fileupload-hidden"
+          className="hidden"
           onChange={this.handleFileUpload}
         />
       </label>

@@ -1,11 +1,12 @@
 import React from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { Link } from 'react-router-dom'
+import { Formik, Form, Field } from 'formik'
 
-import { NeutralButton, TextFormLine, PositiveButton, Form } from 'shared'
 import { linkStyle } from 'constants/styles'
 import { email as emailRegex } from 'constants/regexes'
+import { NeutralButton, TextFormLine } from 'components'
 
-const validate = values => {
+const validate = (values = {}) => {
   let errors = {}
 
   if (!values.email) {
@@ -17,32 +18,32 @@ const validate = values => {
   return errors
 }
 
-export const ForgotPasswordFormComponent = props => {
-  const { handleSubmit, submitting } = props
-
+export const ForgotPasswordForm = ({ onSubmit }) => {
   return (
-    <Form onSubmit={handleSubmit} loading={submitting}>
-      <Field
-        type="text"
-        name="email"
-        labelText="Enter Your Email Address"
-        component={TextFormLine}
-      />
+    <Formik
+      validate={validate}
+      onSubmit={onSubmit}
+      initialValues={{ email: '' }}
+    >
+      {() => (
+        <Form>
+          <Field
+            type="text"
+            name="email"
+            labelText="Enter Your Email Address"
+            component={TextFormLine}
+          />
 
-      <div className="flex items-center">
-        <PositiveButton className="mr-2" submit>
-          Request
-        </PositiveButton>
-
-        <NeutralButton className={linkStyle} color="link" to="/login">
-          Back to Login
-        </NeutralButton>
-      </div>
-    </Form>
+          <div className="flex items-center">
+            <Link className={linkStyle} to="/login">
+              Back to Login
+            </Link>
+            <NeutralButton className="ml-auto" type="submit">
+              Request
+            </NeutralButton>
+          </div>
+        </Form>
+      )}
+    </Formik>
   )
 }
-
-export const ForgotPasswordForm = reduxForm({
-  form: 'forgotPassword',
-  validate
-})(ForgotPasswordFormComponent)

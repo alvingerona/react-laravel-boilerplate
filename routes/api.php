@@ -7,30 +7,12 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/logout', '\App\Api\Controllers\SessionController@logout');
 
     Route::apiResource('/users', '\App\Api\Controllers\UserController');
-    Route::put('/users/{userId}/update-password', '\App\Api\Controllers\UserController@changePassword');
+    Route::put('/users/{slug}/update-password', '\App\Api\Controllers\UserController@changePassword');
 
-    /**
-     * Oveview
-     */
-    Route::get('/utilities/overview', '\App\Api\Controllers\OverviewController@index');
-
-    /**
-     * Avatars
-     */
     Route::get('/avatars', '\App\Api\Controllers\AvatarsController@get');
     Route::post('/avatars', '\App\Api\Controllers\AvatarsController@upload');
     Route::put('/avatars', '\App\Api\Controllers\AvatarsController@update');
     Route::delete('/avatars', '\App\Api\Controllers\AvatarsController@delete');
-
-    /**
-     * Notifications
-     */
-    Route::get('/notifications/latest', '\App\Api\Controllers\NotificationsController@latest');
-    Route::post('/notifications/mark-read', '\App\Api\Controllers\NotificationsController@markRead');
-    /**
-     * Roles
-     */
-    Route::get('/roles', '\App\Api\Controllers\RoleController@index'); 
 });
 
 /**

@@ -1,1 +1,0 @@
-export { loadRoles } from './role'

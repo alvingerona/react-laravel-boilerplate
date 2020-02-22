@@ -1,17 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { reduxForm, Field } from 'redux-form'
+import { Formik, Form, Field } from 'formik'
 
-import {
-  PasswordFormLineIcon,
-  TextFormLineIcon,
-  NeutralButton
-} from 'shared'
-import { email as emailRegex } from 'constants/regexes'
 import { linkStyle } from 'constants/styles'
-import { Col, Row, Form } from 'shared';
+import { email as emailRegex } from 'constants/regexes'
+import { PasswordFormLine, TextFormLine, NeutralButton } from 'components'
 
-const validateLogin = values => {
+const validateLogin = (values = {}) => {
   let errors = {}
 
   if (!values.email) {
@@ -27,50 +22,41 @@ const validateLogin = values => {
   return errors
 }
 
-const InputEmail = props => (
-  <TextFormLineIcon iconClass="icon-user" {...props} />
-)
-
-const InputPassword = props => (
-  <PasswordFormLineIcon iconClass="icon-lock" {...props} />
-)
-
-const LoginForm = props => {
-  const { handleSubmit, submitting } = props
-
+export default ({ onSubmit }) => {
   return (
-    <Form onSubmit={handleSubmit} loading={submitting}>
-      <Field
-        component={InputEmail}
-        type="text"
-        name="email"
-        labelText="Email"
-      />
-      <Field
-        component={InputPassword}
-        type="password"
-        name="password"
-        labelText="Password"
-      />
-
-      <Row>
-        <Col col={6}>
-          <NeutralButton type="primary" className="px-4" submit>
-            Log In
-          </NeutralButton>
-        </Col>
-
-        <Col col={6} className="text-right">
-          <Link className={linkStyle} to="/forgot-password">
-            Forgot Password?
-          </Link>
-        </Col>
-      </Row>
-    </Form>
+    <Formik
+      onSubmit={onSubmit}
+      validate={validateLogin}
+      initialValues={{ email: '', password: '' }}
+    >
+      {props => (
+        <Form>
+          <Field
+            type="text"
+            name="email"
+            labelText="Email"
+            component={TextFormLine}
+          />
+          <Field
+            type="password"
+            name="password"
+            labelText="Password"
+            component={PasswordFormLine}
+          />
+          <div className="flex items-center">
+            <Link className={linkStyle} to="/signup">
+              Or Signup
+            </Link>
+            <span className="inline-block px-2">|</span>
+            <Link className={linkStyle} to="/forgot-password">
+              Forgot Password?
+            </Link>
+            <NeutralButton className="ml-auto" type="submit">
+              Log In
+            </NeutralButton>
+          </div>
+        </Form>
+      )}
+    </Formik>
   )
 }
-
-export default reduxForm({
-  form: 'login',
-  validate: validateLogin
-})(LoginForm)

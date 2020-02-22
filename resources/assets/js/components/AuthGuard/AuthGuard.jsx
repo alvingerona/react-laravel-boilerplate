@@ -1,63 +1,50 @@
-import React from 'react'
 import { connect } from 'react-redux'
-import { replace } from 'react-router-redux'
+import React, { Fragment, useState, useEffect } from 'react'
+
+import { history } from 'utils/history'
 import { getCurrentUserInfo } from 'store/action-creators/session'
 
-export class AuthGuardComponent extends React.Component {
-  constructor(props) {
-    super(props)
+export const AuthGuardComponent = ({
+  currentUserSlug,
+  children,
+  authOrRedirect
+}) => {
+  const [loading, setLoading] = useState(true)
 
-    this.state = {
-      loading: true
+  const attemptAuth = async () => {
+    if (!currentUserSlug) {
+      await authOrRedirect()
     }
+
+    setLoading(false)
   }
 
-  async componentWillMount() {
-    const { authOrRedirect, currentUserId } = this.props
+  useEffect(() => {
+    attemptAuth()
+  }, [])
 
-    if (!currentUserId) {
-      const response = await authOrRedirect()
-      if (response && response.status === 200) {
-        this.setState({
-          loading: false
-        })
-      }
-    } else {
-      this.setState({
-        loading: false
-      })
-    }
-  }
-
-  render() {
-    const { children } = this.props
-    const { loading } = this.state
-
-    if (loading) {
-      return (
-        <div className="items-center">
-          <div className="text-center text-grey">Loading...</div>
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center">
+        <div className="w-screen text-3xl text-center text-grey">
+          Loading...
         </div>
-      )
-    }
-
-    return <div id="auth-guard-wrapper">{children}</div>
+      </div>
+    )
   }
+
+  return <Fragment>{children}</Fragment>
 }
 
-const mapStateToProps = state => ({
-  currentUserId: state.session.currentUser
-})
-
-const mapDispatchToProps = dispatch => ({
-  authOrRedirect: () => {
-    return dispatch(getCurrentUserInfo()).catch(() => {
-      dispatch(replace('/login'))
-    })
-  }
-})
-
 export const AuthGuard = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({
+    currentUserSlug: state.session.currentUser
+  }),
+  dispatch => ({
+    authOrRedirect: () => {
+      return dispatch(getCurrentUserInfo()).catch(() => {
+        history.replace('/login')
+      })
+    }
+  })
 )(AuthGuardComponent)

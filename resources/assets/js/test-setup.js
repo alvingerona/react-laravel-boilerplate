@@ -1,12 +1,10 @@
-import { JSDOM } from 'jsdom'
-import React from 'react'
 import chai from 'chai'
+import React from 'react'
 import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
 import Enzyme from 'enzyme'
+import { JSDOM } from 'jsdom'
+import sinonChai from 'sinon-chai'
 import Adapter from 'enzyme-adapter-react-16'
-
-import 'babel-polyfill'
 
 // Set up enzyme adapter
 Enzyme.configure({ adapter: new Adapter() })

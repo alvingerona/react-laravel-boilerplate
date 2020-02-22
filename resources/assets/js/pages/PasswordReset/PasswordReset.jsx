@@ -3,22 +3,15 @@ import axios from 'axios'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { push } from 'react-router-redux'
-import { SubmissionError } from 'redux-form'
 
+import { history } from 'utils/history'
 import { flashMessage } from 'store/action-creators/flashMessages'
+
 import { PasswordResetForm } from './PasswordResetForm'
-import { CardDash, Row } from 'shared'
 
 export const PasswordResetComponent = props => {
   const { submitPasswordReset } = props
-  return (
-    <Row>
-      <CardDash md={12} title="Reset Password">
-        <PasswordResetForm onSubmit={submitPasswordReset} />
-      </CardDash>
-    </Row>
-  )
+  return <PasswordResetForm onSubmit={submitPasswordReset} />
 }
 
 const parseValidationFromResponse = data => {
@@ -34,30 +27,23 @@ const parseValidationFromResponse = data => {
   return errors
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  submitPasswordReset: async values => {
-    const { match } = ownProps
-
-    try {
-      await axios.post('/api/reset-password', {
-        ...values,
-        token: match.params.resetToken
-      })
-
-      dispatch(push('/login'))
-      dispatch(flashMessage('success', 'Password successfully reset'))
-    } catch (error) {
-      throw new SubmissionError(
-        parseValidationFromResponse(error.response.data)
-      )
-    }
-  }
-})
-
 export default compose(
   withRouter,
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, (dispatch, ownProps) => ({
+    submitPasswordReset: async (values, { setErrors }) => {
+      const { match } = ownProps
+
+      try {
+        await axios.post('/api/reset-password', {
+          ...values,
+          token: match.params.resetToken
+        })
+
+        history.push('/login')
+        dispatch(flashMessage('success', 'Password successfully reset'))
+      } catch (error) {
+        setErrors(parseValidationFromResponse(error.response.data))
+      }
+    }
+  }))
 )(PasswordResetComponent)

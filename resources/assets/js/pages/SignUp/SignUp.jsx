@@ -1,40 +1,39 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import axios from 'axios'
 
-import { actionHttp } from 'utilities'
-import { Card } from 'shared'
-import SignUpForm from './SignUpForm'
+import { history } from 'utils/history'
 
-export const SignUpComponent = props => {
-  const { submitSignup } = props
+import { SignUpForm } from './SignUpForm'
 
-  let initialValues = {
-    email: '',
-    password: '',
-    first_name: ''
+const parseValidationErrorResponse = response => {
+  let errors = {}
+
+  if (response.email && response.email.Unique) {
+    errors.email = 'This email already exists, please try a different email.'
   }
 
-  return (
-    <Card withBody className="p-4">
-      <h1>Register</h1>
-      <p>Create your account</p>
-      <SignUpForm onSubmit={submitSignup} initialValues={initialValues} />
-    </Card>
-  )
+  return errors
 }
 
-const mapDispatchToProps = dispatch => ({
-  submitSignup: data => {
-    return new actionHttp()
-      .setDispatch(dispatch)
-      .setSuccessMessage('Please check your email for email verification.')
-      .onSuccess(() => dispatch(push('/')))
-      .post('register-user', '/api/signup', data)
+export const SignUp = () => {
+  const onSubmit = signUpData => {
+    return axios
+      .post('/api/signup', signUpData)
+      .then(response => {
+        if (response.status === 200) {
+          history.push('/')
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 422) {
+          // throw new SubmissionError(
+          //   parseValidationErrorResponse(error.response.data.messages)
+          // )
+        }
+      })
   }
-})
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignUpComponent)
+  return <SignUpForm onSubmit={onSubmit} />
+}
+
+export default SignUp

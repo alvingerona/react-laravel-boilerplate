@@ -1,76 +1,71 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { Link } from 'react-router-dom'
 
+import { history } from 'utils/history'
+import { sessionActions } from 'store/actions'
 import { currentUserSelector } from 'store/selectors/session'
 import defaultProfileImage from 'default-profile-picture.jpeg'
-import { NavNotifDropdown } from 'components'
-import {
-  DropdownItem,
-  NavbarUnlist,
-  NavItemDropdown,
-  DropdownHeader
-} from 'shared'
 
-export const UserCardComponent = class extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
+export const UserCardComponent = ({
+  user,
+  colorTheme,
+  className = '',
+  logOut
+}) => {
+  if (!user) {
+    return null
   }
 
-  render() {
-    let { user, logOut } = this.props
+  const { first_name: firstName, last_name: lastName, avatar } = user
 
-    const { first_name: firstName, last_name: lastName, avatar } = user
+  const fullName =
+    lastName !== undefined ? [firstName, lastName].join(' ') : firstName
 
-    const fullName =
-      lastName !== undefined ? [firstName, lastName].join(' ') : firstName
+  const themeTextClass =
+    colorTheme === 'dark' ? 'text-blue-darker' : 'text-white'
 
-    return (
-      <NavbarUnlist className="ml-auto">
-        <NavNotifDropdown {...this.prop} />
+  return (
+    <div className={`flex items-center ${className} ${themeTextClass}`}>
+      <img
+        src={avatar || defaultProfileImage}
+        className="w-10 h-10 rounded-full mr-4"
+      />
 
-        <NavItemDropdown
-          label={
-            <img src={avatar || defaultProfileImage} className=" img-avatar" />
-          }
-          toggle={() => {}}
-        >
-          <DropdownHeader>{fullName}</DropdownHeader>
-          <DropdownItem
-            iconClass="fa fa-cog"
-            to="/settings/user"
-            label="Settings"
-          />
-
-          <div className="dropdown-divider mb-0" />
-
-          <DropdownItem
-            iconClass="fa fa-lock"
-            label="Logout"
-            role="button"
-            onClick={logOut}
-          />
-        </NavItemDropdown>
-      </NavbarUnlist>
-    )
-  }
+      <div className="text-sm">
+        <div className="mb-1">{fullName}</div>
+        <ul className="list-reset text-sm">
+          <li className="inline-block mr-4">
+            <span
+              className={`${themeTextClass} underline cursor-pointer`}
+              onClick={logOut}
+            >
+              Logout
+            </span>
+          </li>
+          <li className="inline-block">
+            <Link className={`${themeTextClass}`} to="/settings/user">
+              Settings
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  )
 }
 
-const mapStateToProps = state => ({
-  user: currentUserSelector(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-  logOut: async () => {
-    await axios.get('/api/logout')
-    dispatch(push('/login'))
-  }
-})
-
 export const UserCard = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({
+    user: currentUserSelector(state)
+  }),
+  dispatch => ({
+    logOut: async () => {
+      await axios.get('/api/logout')
+
+      dispatch({ type: sessionActions.LOGOUT })
+
+      history.push('/login')
+    }
+  })
 )(UserCardComponent)

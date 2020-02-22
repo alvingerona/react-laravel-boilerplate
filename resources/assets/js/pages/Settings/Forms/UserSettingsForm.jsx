@@ -1,42 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, Field } from 'redux-form'
+import { Formik, Form, Field } from 'formik'
 
-import { PositiveButton, TextFormRow } from 'shared'
-import { PictureUpload } from 'components'
 import { email as emailRegex } from 'constants/regexes'
+import { PositiveButton, TextFormLine, PictureUpload } from 'components'
 
-export class UserSettingsFormComponent extends React.Component {
-  render() {
-    const { handleSubmit, avatarUploadHandler, className } = this.props
-
-    return (
-      <form className={className} onSubmit={handleSubmit}>
-        <Field
-          name="avatar"
-          component={PictureUpload}
-          uploadHandler={avatarUploadHandler}
-          className="mr-10"
-        />
-        <Field
-          name="first_name"
-          component={TextFormRow}
-          labelText="First Name"
-        />
-        <Field name="last_name" component={TextFormRow} labelText="Last Name" />
-        <Field name="email" component={TextFormRow} labelText="Email" />
-
-        <div className="flex border-grey-light">
-          <PositiveButton type="submit" className="ml-auto">
-            Save User Details
-          </PositiveButton>
-        </div>
-      </form>
-    )
-  }
-}
-
-const validateUserSettings = values => {
+const validate = (values = {}) => {
   let errors = {}
 
   if (!values.first_name) {
@@ -56,22 +25,57 @@ const validateUserSettings = values => {
   return errors
 }
 
-const Form = reduxForm({
-  form: 'accountSettings',
-  enableReinitialize: true,
-  validate: validateUserSettings
-})(UserSettingsFormComponent)
+const UserSettingsFormComponent = ({
+  user,
+  onSubmit,
+  className = '',
+  avatarUploadHandler
+}) => (
+  <Formik
+    validate={validate}
+    onSubmit={onSubmit}
+    initialValues={user}
+    validateOnChange={false}
+  >
+    {() => (
+      <Form className={className}>
+        <div className="flex items-center my-4">
+          <Field
+            name="avatar"
+            component={PictureUpload}
+            uploadHandler={avatarUploadHandler}
+            className="mr-10"
+          />
+          <div className="flex-grow">
+            <Field
+              name="first_name"
+              component={TextFormLine}
+              labelText="First Name"
+            />
+            <Field
+              name="last_name"
+              component={TextFormLine}
+              labelText="Last Name"
+            />
+            <Field name="email" component={TextFormLine} labelText="Email" />
+          </div>
+        </div>
 
-const mapStateToProps = state => {
+        <div className="flex border-grey-light">
+          <PositiveButton type="submit" className="ml-auto">
+            Save User Details
+          </PositiveButton>
+        </div>
+      </Form>
+    )}
+  </Formik>
+)
+
+export const UserSettingsForm = connect(state => {
   const {
     session: { currentUser }
   } = state
   return {
-    initialValues: state.entities.users[currentUser]
+    user: state.entities.users[currentUser]
   }
-}
-
-export const UserSettingsForm = connect(
-  mapStateToProps,
-  null
-)(Form)
+}, null)(UserSettingsFormComponent)

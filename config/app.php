@@ -53,6 +53,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'asset_url' => env('ASSET_URL', 'http://localhost/public'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -152,8 +154,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
-        
+
         /*
          * Application Service Providers...
          */
@@ -164,7 +165,7 @@ return [
         App\Providers\ResponseMacroServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -214,7 +215,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

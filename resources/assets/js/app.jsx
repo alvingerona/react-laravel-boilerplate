@@ -1,25 +1,25 @@
-import React, { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
-import { ConnectedRouter } from 'react-router-redux'
+import React, { lazy, Suspense } from 'react'
+import { ModalProvider } from 'react-context-modals'
+import { Router, Route, Switch } from 'react-router-dom'
 
-import { FormPageLayout, DashboardLayout } from 'layouts'
-import { store, browserHistory } from 'store/create-store'
 import { AuthGuard, FlashMessageRoot } from 'components'
+import { history } from 'utils/history'
+import { store } from 'store/create-store'
+import { DashboardLayout, FormPageLayout } from 'layouts'
 
 const LogIn = lazy(() => import('pages/LogIn/LogIn'))
 const SignUp = lazy(() => import('pages/SignUp/SignUp'))
 const Overview = lazy(() => import('pages/Overview/Overview'))
-const PasswordReset = lazy(() => import('pages/PasswordReset/PasswordReset'))
-const ForgotPassword = lazy(() => import('pages/ForgotPassword/ForgotPassword'))
 const NotFound = lazy(() => import('pages/NotFound/NotFound'))
 const SettingsRoutes = lazy(() => import('pages/Settings/SettingsRoutes'))
-const UsersRoutes = lazy(() => import('pages/Users/UsersRoutes'))
+const PasswordReset = lazy(() => import('pages/PasswordReset/PasswordReset'))
+const ForgotPassword = lazy(() => import('pages/ForgotPassword/ForgotPassword'))
 
 const withDashboard = ContentComponent => {
   return props => (
     <AuthGuard>
-      <DashboardLayout match={props.match}>
+      <DashboardLayout>
         <ContentComponent {...props} />
       </DashboardLayout>
     </AuthGuard>
@@ -32,58 +32,61 @@ const Loading = () => (
   </div>
 )
 
-export const App = props => (
+const OverviewWithDashboard = withDashboard(Overview)
+const SettingsWithDashboard = withDashboard(SettingsRoutes)
+
+export const App = () => (
   <Provider store={store}>
     <Suspense fallback={<Loading />}>
       <FlashMessageRoot />
-      <ConnectedRouter history={browserHistory}>
-        <Switch>
-          <Route
-            exact
-            path="/login"
-            render={props => (
-              <FormPageLayout md="6">
-                <LogIn {...props} />
-              </FormPageLayout>
-            )}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() => (
-              <FormPageLayout md="6">
-                <SignUp />
-              </FormPageLayout>
-            )}
-          />
-          <Route
-            exact
-            path="/forgot-password"
-            render={() => (
-              <FormPageLayout md="6">
-                <ForgotPassword />
-              </FormPageLayout>
-            )}
-          />
-          <Route
-            exact
-            path="/reset-password/:resetToken"
-            render={() => (
-              <FormPageLayout title="Reset Password" md="6">
-                <PasswordReset />
-              </FormPageLayout>
-            )}
-          />
+      <Router history={history}>
+        <ModalProvider animated>
+          <Switch>
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <FormPageLayout title="Log In">
+                  <LogIn />
+                </FormPageLayout>
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() => (
+                <FormPageLayout title="Sign Up">
+                  <SignUp />
+                </FormPageLayout>
+              )}
+            />
+            <Route
+              exact
+              path="/forgot-password"
+              render={() => (
+                <FormPageLayout title="Forgot Password">
+                  <ForgotPassword />
+                </FormPageLayout>
+              )}
+            />
+            <Route
+              exact
+              path="/reset-password/:resetToken"
+              render={() => (
+                <FormPageLayout title="Reset Password">
+                  <PasswordReset />
+                </FormPageLayout>
+              )}
+            />
 
-          {/* Dashboard routes */}
-          <Route exact path="/" component={withDashboard(Overview)} />
-          <Route path="/settings" component={withDashboard(SettingsRoutes)} />
-          <Route path="/users" component={withDashboard(UsersRoutes)} />
-        
-          {/* 404 route */}
-          <Route path="*" exact={true} render={() => <NotFound />} />
-        </Switch>
-      </ConnectedRouter>
+            {/* Dashboard routes */}
+            <Route exact path="/" component={OverviewWithDashboard} />
+            <Route path="/settings" component={SettingsWithDashboard} />
+            {/* 404 route */}
+            <Route path="*" exact={true} render={() => <NotFound />} />
+          </Switch>
+        </ModalProvider>
+      </Router>
     </Suspense>
   </Provider>
 )

@@ -4,7 +4,6 @@ export const makeRequest = (actionType, requestCall) => async dispatch => {
   dispatch({ type: requestActions.REQUEST, actionType })
   try {
     const data = await requestCall()
-
     dispatch({ type: requestActions.SUCCESS, actionType })
     return data
   } catch (error) {

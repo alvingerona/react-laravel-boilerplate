@@ -1,29 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { SubmissionError } from 'redux-form'
 
+import { history } from 'utils/history'
 import { logIn } from 'store/action-creators/session'
-import { CardGroup, Card } from 'shared'
+import { showPreloader, hidePreloader } from 'store/action-creators/screen'
+
 import LogInForm from './LogInForm'
 
 export const LogInComponent = props => {
   const { attemptLogin } = props
 
-  return (
-    <CardGroup>
-      <LoginBlock attemptLogin={attemptLogin} />
-    </CardGroup>
-  )
+  return <LogInForm onSubmit={attemptLogin} />
 }
-
-const LoginBlock = ({ attemptLogin }) => (
-  <Card withBody className="p-2">
-    <h1>Login</h1>
-    <p className="text-muted">Sign In to your account</p>
-    <LogInForm onSubmit={attemptLogin} />
-  </Card>
-)
 
 const parseValidationFromResponse = response => {
   let errors = {}
@@ -37,20 +25,18 @@ const parseValidationFromResponse = response => {
   return errors
 }
 
-const mapDispatchToProps = dispatch => ({
-  attemptLogin: async loginDetails => {
+export default connect(null, dispatch => ({
+  attemptLogin: async (loginDetails, { setErrors }) => {
+    await dispatch(showPreloader())
+
     try {
       await dispatch(logIn(loginDetails))
-      dispatch(push('/'))
+      await dispatch(hidePreloader())
+
+      history.push('/')
     } catch (error) {
-      throw new SubmissionError(
-        parseValidationFromResponse(error.response.data)
-      )
+      await dispatch(hidePreloader())
+      setErrors(parseValidationFromResponse(error.response.data))
     }
   }
-})
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(LogInComponent)
+}))(LogInComponent)

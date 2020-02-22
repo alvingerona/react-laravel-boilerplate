@@ -2,12 +2,11 @@
 
 namespace App\Services\User;
 
-use App\Contracts\Repository\UserRepositoryContract as UserRepository;
-use Illuminate\Contracts\Routing\ResponseFactory as Response;
-use Illuminate\Contracts\Validation\Factory as Validator;
-use Illuminate\Validation\ValidationException;
 use Laravel\Passport\ApiTokenCookieFactory;
-use App\Notifications\SignupWelcome;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Factory as Validator;
+use Illuminate\Contracts\Routing\ResponseFactory as Response;
+use App\Contracts\Repository\UserRepositoryContract as UserRepository;
 
 class SignUpService
 {
@@ -32,23 +31,25 @@ class SignUpService
     {
         return $this->validator->make($data, [
             'first_name' => 'required',
-            'last_name' => 'nullable',
+            'last_name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required'
-        ]);        
+            'password' => 'required|min:8'
+        ]);
     }
 
     public function signUpResponse($userInfo, $csrfToken)
     {
         try {
-            $apiCookie = $this->signUp($userInfo, $csrfToken);
+            $newUser = $this->signUp($userInfo);
+            $apiCookie = $this->cookie->make($newUser->id, $csrfToken);
+
             return $this->response->success(['message' => 'User successfully signed up'])->withCookie($apiCookie);
         } catch (ValidationException $e) {
             return $this->response->validateError($e->errors());
         }
     }
 
-    public function signUp($userInfo, $csrfToken)
+    public function signUp($userInfo)
     {
         $validator = $this->validateUserData($userInfo);
 
@@ -56,21 +57,6 @@ class SignUpService
             throw new ValidationException($validator);
         }
 
-        if(!isset($userInfo['last_name']) || !$userInfo['last_name'])
-        {
-            $userInfo['last_name'] = "";
-        }
-
-        $newUser = $this->user->skipPresenter()->create($userInfo);
-
-        /**
-         * Send notification
-         */
-        $newUser->notify(new SignupWelcome());
-
-        /**
-         * Create cookie then response
-         */
-        return $this->cookie->make($newUser->id, $csrfToken);
+        return $this->user->create($userInfo);
     }
 }

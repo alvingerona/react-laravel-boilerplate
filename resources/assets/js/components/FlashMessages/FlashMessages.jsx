@@ -1,41 +1,38 @@
 import React from 'react'
 
-export const BaseFlashMessage = ({ className = '', children }) => (
-  <div className={`alert rounded-0 fade mb-0 show ${className}`} role="alert">
+export const BaseFlashMessage = ({
+  className = '',
+  handleDeleteClick,
+  children
+}) => (
+  <div className={`fixed w-screen flex text-white slide-down p-2 ${className}`}>
     {children}
-    {/* TODO: add close button */}
-    {/* 
-    <button
-      type="button"
-      className="close"
-      aria-label="Close"
-      onClick={handleDeleteClick}
-    >
-      <span aria-hidden="true">×</span>
-    </button> */}
+    <span className="ml-auto" onClick={handleDeleteClick}>
+      X
+    </span>
   </div>
 )
 
 export const NeutralFlashMessage = ({ message, ...wrapperProps }) => (
-  <BaseFlashMessage {...wrapperProps} className="alert-primary">
+  <BaseFlashMessage {...wrapperProps} className="bg-blue">
     {message}
   </BaseFlashMessage>
 )
 
 export const NegativeFlashMessage = ({ message, ...wrapperProps }) => (
-  <BaseFlashMessage {...wrapperProps} className="alert-danger">
+  <BaseFlashMessage {...wrapperProps} className="bg-red">
     {message}
   </BaseFlashMessage>
 )
 
 export const WarningFlashMessage = ({ message, ...wrapperProps }) => (
-  <BaseFlashMessage {...wrapperProps} className="alert-warning">
+  <BaseFlashMessage {...wrapperProps} className="bg-yellow-dark">
     {message}
   </BaseFlashMessage>
 )
 
 export const PositiveFlashMessage = ({ message, ...wrapperProps }) => (
-  <BaseFlashMessage {...wrapperProps} className="alert-success">
+  <BaseFlashMessage {...wrapperProps} className="bg-green">
     {message}
   </BaseFlashMessage>
 )

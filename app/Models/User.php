@@ -2,21 +2,14 @@
 
 namespace App\Models;
 
+use Balping\HashSlug\HasHashSlug;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use App\Models\Scopes\UserScope;
-use App\Models\Relations\UserRelation;
-use App\Models\Attributors\UserAttributor;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, HasRoles, UserScope, UserRelation, UserAttributor;
-
-    const ROLE_CLIENT = "employee";
-    const ROLE_SUPPORT = "support";
-    const ROLE_ADMIN = "admin";
+    use HasApiTokens, Notifiable, HasHashSlug;
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'avatar'
@@ -30,22 +23,5 @@ class User extends Authenticatable
     {
         $hash = resolve('Illuminate\Contracts\Hashing\Hasher');
         $this->attributes['password'] = $hash->make($password);
-    }
-
-    public function formatDate($date)
-    {
-        if(!$date)
-        {
-            return [];
-        }
-
-        return [
-            'a' => $date->format('m/d/Y')
-        ];
-    }
-
-    public function getName()
-    {
-        return $this->first_name . " " . $this->last_name;
     }
 }

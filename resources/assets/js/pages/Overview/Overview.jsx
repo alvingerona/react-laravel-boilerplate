@@ -1,77 +1,33 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
+import React, { Fragment } from 'react'
+import { useModal } from 'react-context-modals'
 
-import { setDashboard } from 'store/action-creators/page'
-import { overview } from 'store/action-creators/misc'
-import { Col, Widget } from 'shared'
-import { user } from 'utilities'
+import { NeutralButton } from 'components'
 
-const OverviewComponent = class extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+const OverviewComponent = () => {
+  const ModalExample = props => <div className="p-16">{props.message}</div>
 
-    }
-  }
+  const { showModal } = useModal()
 
-  componentDidMount() {
-    this.props.setDashboard({
-      title: 'Dashboard'
-    })
-
-    this.props.loadOverview();
-  }
-
-  _user() {
-    let { currentUser } = this.props
-
-    return new user(currentUser)
-  }
-
-  render() {
-    let {  } = this.state
-    let { openTickets, newComments } = this.props;
-    let user = this._user()
-
-    return (
-      <Fragment>
-        <Col md={3}>
-          <Widget title={openTickets} iconClass="fa fa-ticket bg-danger" viewLabel="View Tickets" viewPath="/" />
-        </Col>
-        <Col md={3}>
-        <Widget title={newComments} iconClass="fa fa-comment bg-primary" viewLabel="View Comments" viewPath="/" />
-        </Col>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Helmet>
+        <title>Boilerplate overview</title>
+      </Helmet>
+      Put your initial dashboard page here
+      <div className="mt-4">
+        <NeutralButton
+          onClick={() =>
+            showModal(ModalExample, {
+              message: 'This message was passed in via modal props'
+            })
+          }
+        >
+          Open an example modal
+        </NeutralButton>
+      </div>
+    </Fragment>
+  )
 }
 
-const mapStateToProps = state => {
-  let { misc: { overview } } = state;
-  let openTickets = 0;
-  let newComments = 0;
-
-  if(overview && overview.open_tickets){
-    openTickets = overview.open_tickets;
-  }
-
-  if(overview && overview.new_comments){
-    newComments = overview.new_comments;
-  }
-
-  return {
-    currentUser: state.entities.users[state.session.currentUser],
-    openTickets,
-    newComments
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  setDashboard: opts => setDashboard(dispatch, opts),
-  loadOverview: () => overview(dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OverviewComponent)
+export default OverviewComponent
